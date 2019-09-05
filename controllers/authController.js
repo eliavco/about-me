@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
@@ -41,12 +42,14 @@ exports.login = catchAsync(async (req, res, next) => {
     const { email, password } = req.body;
 
     if (!email || !password)
-        next(new AppError('Please provide an email and a password', 400));
+        return next(
+            new AppError('Please provide an email and a password', 400)
+        );
 
     const user = await User.findOne({ email }).select('+password');
 
     if (!user || !(await user.correctPassword(password, user.password)))
-        next(new AppError('Email or password incorrect', 401));
+        return next(new AppError('Email or password incorrect', 401));
 
     const token = signToken(user._id);
     res.status(200).json({
@@ -65,7 +68,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     }
 
     if (!token)
-        next(
+        return next(
             new AppError(
                 'You are not logged in. Please log in to acces this information',
                 401
@@ -76,7 +79,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
     const currentUser = await User.findById(decoded.id);
     if (!currentUser)
-        next(
+        return next(
             new AppError(
                 'The user you are trying to log in to, does not longer exist',
                 410
@@ -84,7 +87,7 @@ exports.protect = catchAsync(async (req, res, next) => {
         );
 
     if (currentUser.changedPasswordAfter(decoded.iat))
-        next(
+        return next(
             new AppError(
                 'The password was recently changed. Please login again',
                 403
@@ -113,7 +116,9 @@ exports.restrict = (...roles) =>
 exports.forgotPassword = catchAsync(async (req, res, next) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user)
-        next(new AppError('User with this email address not found', 404));
+        return next(
+            new AppError('User with this email address not found', 404)
+        );
 
     // eslint-disable-next-line no-unused-vars
     const resetToken = user.createPasswordResetToken();
@@ -148,5 +153,29 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 });
 
 exports.resetPassword = catchAsync(async (req, res, next) => {
-    //
+    const hashedToken = crypto
+        .createHash('sha256')
+        .update(req.params.token)
+        .digest('hex');
+
+    const user = await User.findOne({
+        passwordResetToken: hashedToken,
+        passwordResetExpiration: { $gte: Date.now() }
+    });
+
+    if (!user)
+        return next(new AppError('Token is invalid or has expired.', 403));
+    if (!req.body.password || !req.body.passwordConfirm)
+        return next(new AppError('Send a password and confirm', 400));
+
+    user.password = req.body.password;
+    user.passwordConfirm = req.body.passwordConfirm;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpiration = undefined;
+    await user.save();
+    const token = signToken(user._id);
+    res.status(200).json({
+        status: 'success',
+        token
+    });
 });
