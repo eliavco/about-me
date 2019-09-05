@@ -1,0 +1,49 @@
+{
+  "name": "natours",
+  "version": "1.0.0",
+  "description": "Learning Node.js, Express, and MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "nodemon server.js",
+    "start:prod": "cross-env NODE_ENV=\"production\" nodemon server.js",
+    "start:debug": "ndb server.js",
+    "emptyToursSimple": "node dev-data/data/import-dev-data.js --delete",
+    "populateToursSimple": "node dev-data/data/import-dev-data.js --import",
+    "emptyUsersSimple": "node dev-data/data/import-dev-data-users.js --delete",
+    "populateUsersSimple": "node dev-data/data/import-dev-data-users.js --import"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/eliavco/NodeJsJonas/tree/master/complete-node-bootcamp-master/4-natours/starter.git"
+  },
+  "author": "Eliav Cohen",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.6.9",
+    "morgan": "^1.9.1",
+    "nodemailer": "^6.3.0",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "slugify": "^1.3.4",
+    "validator": "^11.1.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "ndb": "^1.1.4",
+    "prettier": "^1.18.2"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  }
+}
