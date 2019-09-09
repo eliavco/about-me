@@ -10,8 +10,11 @@ const { protect, restrict } = authController;
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 
+router.post('/updatePassword', authController.updatePassword);
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
+
+router.post('/promote', authController.getPromoted);
 
 router
     .route('/')
