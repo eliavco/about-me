@@ -29,6 +29,11 @@
 
                 "forgotPassword": "Send a POST request to '/api/v1/users/forgotPassword' with your email in the body of the request, a reset token will be sent to your email, go check your email and follow the instructions. (send the url PATCH to the server, with a password and passwordConfirm and you will be signed in)",
                 "updatePassword": "Send a PATCH request to 'api/v1/users/updatePassword' with your email, oldPassword, newPassword and newPasswordConfirm and you will be automatically signed in and will get a new token",
+                
+                "updateInformationAboutYourself": "Send a PATCH request to 'api/v1/users/updateInfo' with your new information in the body",
+                
+                "deleteYourAccount": "Send a DELETE request to 'api/v1/users/deleteMe'",
+                "restoreYourAcount": "Log In again",
 
                 "getPromoted": "Send a PATCH request to 'api/v1/users/promote' with your email, newRole, adminEmail and adminPassword and you will get promoted to the role"
             },

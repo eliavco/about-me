@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+// const User = require('./userModel');
 // const validator = require('validator');
 
 const tourSchema = new mongoose.Schema(
@@ -88,7 +89,53 @@ const tourSchema = new mongoose.Schema(
             default: Date.now(),
             select: false
         },
-        startDates: [Date]
+        startDates: [Date],
+        startLocation: {
+            // add properties like an embedded doc
+            type: {
+                type: String,
+                default: 'Point',
+                enum: ['Point']
+            },
+            coordinates: [
+                {
+                    type: Number
+                }
+            ],
+            address: {
+                type: String,
+                trim: true
+            },
+            description: {
+                type: String,
+                trim: true
+            }
+        },
+        locations: [
+            {
+                type: {
+                    type: String,
+                    default: 'Point',
+                    enum: ['Point']
+                },
+                coordinates: [Number],
+                address: {
+                    type: String,
+                    trim: true
+                },
+                description: {
+                    type: String,
+                    trim: true
+                },
+                day: Number
+            }
+        ],
+        guides: [
+            {
+                type: mongoose.Schema.ObjectId,
+                ref: 'User'
+            }
+        ]
     },
     {
         toJSON: { virtuals: true },
@@ -115,6 +162,12 @@ tourSchema.pre('save', function(next) {
     next();
 });
 
+// tourSchema.pre('save', async function(next) {
+//     const guidesProm = this.guides.map(async id => await User.findById(id));
+//     this.guides = await Promise.all(guidesProm);
+//     next();
+// });
+
 // tourSchema.pre('save', function(next) {
 //     console.log('Will Save');
 //     next();
@@ -124,13 +177,20 @@ tourSchema.pre('save', function(next) {
 //     console.log(doc);
 //     next();
 // });
-
-tourSchema.pre(/^find/, function(next) {
+const unSecret = function(next) {
     // tourSchema.pre('find', function(next) {
     this.find({ secretTour: { $ne: true } });
     // this.start = Date.now();
     next();
-});
+};
+tourSchema.pre('find', unSecret);
+// tourSchema.pre('findOne', unSecret);
+tourSchema.pre('findByIdAndRemove', unSecret);
+// tourSchema.pre('findOneAndUpdate', unSecret);
+tourSchema.pre('findOneAndRemove', unSecret);
+tourSchema.pre('findOneAndReplace', unSecret);
+// tourSchema.pre('findOneAndDelete', unSecret);
+tourSchema.pre('findMany', unSecret);
 
 // tourSchema.post(/^find/, function(docs, next) {
 //     console.log(
@@ -138,6 +198,14 @@ tourSchema.pre(/^find/, function(next) {
 //     );
 //     next();
 // });
+
+tourSchema.pre(/^find/, function(next) {
+    this.populate({
+        path: 'guides',
+        select: '-__v -passwordChangedAt'
+    });
+    next();
+});
 
 tourSchema.pre('aggregate', function(next) {
     this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });

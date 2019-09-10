@@ -25,17 +25,20 @@ mongoose
         // console.log('DB connected');
     });
 
-const userNames = JSON.parse(
-    fs.readFileSync(`${__dirname}/users-simple.json`, 'utf-8')
+// const userNames = JSON.parse(
+//     fs.readFileSync(`${__dirname}/users-simple.json`, 'utf-8')
+// );
+// const users = userNames.map(userName => {
+//     return {
+//         name: userName,
+//         email: `${userName.split(' ').join('.')}@highmail.com`,
+//         password: `${userName.split(' ')[0]}100`,
+//         passwordConfirm: `${userName.split(' ')[0]}100`
+//     };
+// });
+const users = JSON.parse(
+    fs.readFileSync(`${__dirname}/users-to-import.json`, 'utf-8')
 );
-const users = userNames.map(userName => {
-    return {
-        name: userName,
-        email: `${userName.split(' ').join('.')}@highmail.com`,
-        password: `${userName.split(' ')[0]}100`,
-        passwordConfirm: `${userName.split(' ')[0]}100`
-    };
-});
 
 const importData = async () => {
     try {

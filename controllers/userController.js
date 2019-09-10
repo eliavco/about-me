@@ -1,6 +1,15 @@
 const User = require('./../models/userModel');
 const APIFeatures = require('./../utils/apiFeatures');
 const catchAsync = require('./../utils/catchAsync');
+const AppError = require('./../utils/appError');
+
+const filterObj = (object, ...allowedFields) => {
+    const newObj = {};
+    Object.keys(object).forEach(el => {
+        if (allowedFields.includes(el)) newObj[el] = object[el];
+    });
+    return newObj;
+};
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
     const features = new APIFeatures(User.find(), req.body, req.query, User)
@@ -22,28 +31,74 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.getUser = catchAsync((req, res, next) => {
+exports.updateMe = catchAsync(async (req, res, next) => {
+    if (
+        req.body.password ||
+        req.body.passwordConfirm ||
+        req.body.newPassword ||
+        req.body.newPasswordConfirm ||
+        req.body.oldPassword
+    )
+        return next(
+            new AppError(
+                'You cannot update passwords here. Please use /updatePassword',
+                400
+            )
+        );
+
+    const filteredBody = filterObj(req.body, 'name', 'email');
+    const updatedUser = await User.findByIdAndUpdate(
+        req.currentUser.id,
+        filteredBody,
+        {
+            new: true,
+            runValidators: true
+        }
+    );
+
+    res.status(200).json({
+        status: 'success',
+        user: updatedUser
+    });
+});
+
+exports.deleteMe = catchAsync(async (req, res, next) => {
+    await User.findByIdAndUpdate(req.currentUser.id, { active: false });
+
+    res.status(204).json({
+        status: 'success',
+        data: null
+    });
+});
+
+exports.getUser = catchAsync(async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+
+    if (!user) return next(new AppError('No user found for this ID', 404));
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            user
+        }
+    });
+});
+
+exports.createNewUser = catchAsync(async (req, res, next) => {
     res.status(500).json({
         status: 'error',
         message: 'This route is not defined yet...'
     });
 });
 
-exports.createNewUser = catchAsync((req, res, next) => {
+exports.updateUser = catchAsync(async (req, res, next) => {
     res.status(500).json({
         status: 'error',
         message: 'This route is not defined yet...'
     });
 });
 
-exports.updateUser = catchAsync((req, res, next) => {
-    res.status(500).json({
-        status: 'error',
-        message: 'This route is not defined yet...'
-    });
-});
-
-exports.deleteUser = catchAsync((req, res, next) => {
+exports.deleteUser = catchAsync(async (req, res, next) => {
     res.status(500).json({
         status: 'error',
         message: 'This route is not defined yet...'

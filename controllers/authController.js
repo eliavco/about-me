@@ -14,6 +14,16 @@ const signToken = id => {
 
 const createSendToken = (user, statusCode, res) => {
     const token = signToken(user._id);
+    const cookieOptions = {
+        expires: new Date(
+            Date.now() +
+                process.env.JWT_EXPIRES_IN.split('d')[0] * 24 * 60 * 60 * 1000
+        ),
+        httpOnly: true
+    };
+    if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+
+    res.cookie('jwt', token, cookieOptions);
 
     res.status(statusCode).json({
         status: 'success',
@@ -56,6 +66,8 @@ exports.login = catchAsync(async (req, res, next) => {
     if (!user || !(await user.correctPassword(password, user.password)))
         return next(new AppError('Email or password incorrect', 401));
 
+    user.restoreAccount();
+    await user.save({ validateBeforeSave: false });
     createSendToken(user, 200, res);
 });
 
@@ -224,6 +236,12 @@ exports.getPromoted = catchAsync(async (req, res, next) => {
         !(await adminUser.correctPassword(adminPassword, adminUser.password))
     )
         return next(new AppError("Admin's email or password incorrect", 400));
+
+    if (
+        adminUser.email !== process.env.EMAIL_ADMIN &&
+        adminUser.role !== 'admin'
+    )
+        return next(new AppError('No admin', 400));
 
     user.role = newRole;
     await user.save();
