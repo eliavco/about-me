@@ -36,11 +36,17 @@ router.route('/stats').get(protect, tourController.getStats);
 router
     .route('/:id')
     .get(protect, tourController.getTour)
-    .patch(protect, restrict('admin', 'lead-guide'), tourController.updateTour)
+    .patch(
+        protect,
+        restrict('admin', 'lead-guide'),
+        tourController.updateTourF,
+        tourController.updateTourS
+    )
     .delete(
         protect,
         restrict('admin', 'lead-guide'),
-        tourController.deleteTour
+        tourController.deleteTourF,
+        tourController.deleteTourS
     );
 
 // router.route('/query/:query').get(tourController.getAllTours);
@@ -58,16 +64,23 @@ const getOnlyATour = (req, res, next) => {
 router
     .route('/:tourId/reviews')
     .get(protect, getOnlyTour)
-    .post(protect, restrict('user', 'admin'), reviewController.createNewReview)
+    .post(
+        protect,
+        restrict('user', 'admin'),
+        reviewController.defineParams,
+        reviewController.createNewReview
+    )
     .patch(
         protect,
         restrict('user', 'admin'),
-        reviewController.updateReviewDirect
+        reviewController.updateReviewF,
+        reviewController.updateReviewS
     )
     .delete(
         protect,
         restrict('user', 'admin'),
-        reviewController.deleteReviewDirect
+        reviewController.deleteReviewF,
+        reviewController.deleteReviewS
     );
 
 router.route('/:tourId/reviews/:id').get(protect, getOnlyATour);

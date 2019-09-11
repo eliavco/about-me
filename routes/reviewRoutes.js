@@ -9,7 +9,12 @@ const { protect, restrict } = authController;
 router
     .route('/')
     .get(protect, reviewController.getAllReviews)
-    .post(protect, restrict('admin'), reviewController.createNewReview);
+    .post(
+        protect,
+        restrict('admin'),
+        reviewController.defineParams,
+        reviewController.createNewReview
+    );
 
 router
     .route('/stats')
@@ -19,11 +24,17 @@ router
 router
     .route('/:id')
     .get(protect, reviewController.getReview)
-    .patch(protect, restrict('admin'), reviewController.updateReview)
+    .patch(
+        protect,
+        restrict('admin'),
+        reviewController.updateReviewF,
+        reviewController.updateReviewS
+    )
     .delete(
         protect,
         restrict('admin', 'lead-guide'),
-        reviewController.deleteReview
+        reviewController.deleteReviewF,
+        reviewController.deleteReviewS
     );
 
 module.exports = router;

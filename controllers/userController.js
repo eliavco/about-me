@@ -1,7 +1,7 @@
 const User = require('./../models/userModel');
-const APIFeatures = require('./../utils/apiFeatures');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
+const factory = require('./../controllers/factoryGenerator');
 
 const filterObj = (object, ...allowedFields) => {
     const newObj = {};
@@ -11,25 +11,7 @@ const filterObj = (object, ...allowedFields) => {
     return newObj;
 };
 
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-    const features = new APIFeatures(User.find(), req.body, req.query, User)
-        .filter()
-        .sort()
-        .limitFields()
-        .paginate();
-
-    const users = await features.query;
-
-    res.status(200).json({
-        status: 'success',
-        results: {
-            users: users.length
-        },
-        data: {
-            users
-        }
-    });
-});
+exports.getAllUsers = factory.getAll(User);
 
 exports.updateMe = catchAsync(async (req, res, next) => {
     if (
@@ -71,65 +53,24 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.getUser = catchAsync(async (req, res, next) => {
-    const user = await User.findById(req.params.id);
+exports.getUser = factory.getOne(User, false);
 
-    if (!user) return next(new AppError('No user found for this ID', 404));
+exports.createNewUser = factory.createOne(User);
 
-    res.status(200).json({
-        status: 'success',
-        data: {
-            user
-        }
+exports.updateUserF = catchAsync(async (req, res, next) => {
+    req.upDoc = await User.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true,
+        upsert: true
     });
 });
 
-exports.createNewUser = catchAsync(async (req, res, next) => {
-    res.status(500).json({
-        status: 'error',
-        message: 'This route is not defined yet...'
-    });
+exports.updateUserS = factory.updateOne;
+
+exports.deleteUserF = catchAsync(async (req, res, next) => {
+    req.delDoc = await User.findByIdAndDelete(req.params.id);
 });
 
-exports.updateUser = catchAsync(async (req, res, next) => {
-    res.status(500).json({
-        status: 'error',
-        message: 'This route is not defined yet...'
-    });
-});
+exports.deleteUserS = factory.deleteOne('user');
 
-exports.deleteUser = catchAsync(async (req, res, next) => {
-    res.status(500).json({
-        status: 'error',
-        message: 'This route is not defined yet...'
-    });
-});
-
-const reISO = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*))(?:Z|(\+|-)([\d|:]*))?$/;
-// eslint-disable-next-line no-useless-escape
-const reMsAjax = /^\/Date\((d|-|.*)\)[\/|\\]$/;
-
-JSON.dateParser = function(key, value) {
-    if (typeof value === 'string') {
-        let a = reISO.exec(value);
-        if (a) return new Date(value);
-        a = reMsAjax.exec(value);
-        if (a) {
-            const b = a[1].split(/[-+,.]/);
-            return new Date(b[0] ? +b[0] : 0 - +b[1]);
-        }
-    }
-    return value;
-};
-
-exports.getStats = catchAsync(async (req, res, next) => {
-    const aggregation = JSON.parse(JSON.stringify(req.body), JSON.dateParser);
-    const stats = await User.aggregate(aggregation.stages);
-    res.status(200).json({
-        status: 'success',
-        results: stats.length,
-        data: {
-            stats
-        }
-    });
-});
+exports.getStats = factory.getStats(User);

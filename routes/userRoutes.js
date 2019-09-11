@@ -34,7 +34,17 @@ router
 router
     .route('/:id')
     .get(protect, restrict('admin', 'lead-guide'), userController.getUser)
-    .patch(protect, restrict('admin'), userController.updateUser)
-    .delete(protect, restrict('admin'), userController.deleteUser);
+    .patch(
+        protect,
+        restrict('admin'),
+        userController.updateUserF,
+        userController.updateUserS
+    )
+    .delete(
+        protect,
+        restrict('admin'),
+        userController.deleteUserF,
+        userController.deleteUserS
+    );
 
 module.exports = router;
