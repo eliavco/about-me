@@ -12,7 +12,9 @@
     "emptyUsers": "node dev-data/data/import-dev-data-users.js --delete",
     "populateUsers": "node dev-data/data/import-dev-data-users.js --import",
     "emptyReviews": "node dev-data/data/import-dev-data-reviews.js --delete",
-    "populateReviews": "node dev-data/data/import-dev-data-reviews.js --import"
+    "populateReviews": "node dev-data/data/import-dev-data-reviews.js --import",
+    "emptyDocs": "node dev-data/data/import-dev-data-docs.js --delete",
+    "populateDocs": "node dev-data/data/import-dev-data-docs.js --import"
   },
   "repository": {
     "type": "git",

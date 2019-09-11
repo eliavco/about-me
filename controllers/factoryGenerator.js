@@ -1,7 +1,8 @@
-const fs = require('fs');
+// const fs = require('fs');
 const APIFeatures = require('./../utils/apiFeatures');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
+const Documentation = require('./../models/docsModel');
 
 const reISO = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*))(?:Z|(\+|-)([\d|:]*))?$/;
 // eslint-disable-next-line no-useless-escape
@@ -93,15 +94,16 @@ exports.deleteOne = name =>
     });
 
 exports.getDoc = catchAsync(async (req, res, next) => {
-    const documentation = await JSON.parse(
-        fs.readFileSync(
-            `${__dirname}/../dev-data/data/api-documentation.json`,
-            'utf-8'
-        )
-    );
+    // const documentation = await JSON.parse(
+    //     fs.readFileSync(
+    //         `${__dirname}/../dev-data/data/api-documentation.json`,
+    //         'utf-8'
+    //     )
+    // );
+    const documentation = await Documentation.findOne({ title: 'API' });
     res.status(200).json({
         status: 'success',
-        data: documentation
+        data: JSON.parse(documentation.content)
     });
 });
 
