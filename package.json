@@ -10,7 +10,9 @@
     "emptyTours": "node dev-data/data/import-dev-data.js --delete",
     "populateTours": "node dev-data/data/import-dev-data.js --import",
     "emptyUsers": "node dev-data/data/import-dev-data-users.js --delete",
-    "populateUsers": "node dev-data/data/import-dev-data-users.js --import"
+    "populateUsers": "node dev-data/data/import-dev-data-users.js --import",
+    "emptyReviews": "node dev-data/data/import-dev-data-reviews.js --delete",
+    "populateReviews": "node dev-data/data/import-dev-data-reviews.js --import"
   },
   "repository": {
     "type": "git",
