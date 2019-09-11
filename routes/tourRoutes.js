@@ -59,11 +59,15 @@ router
     .route('/:tourId/reviews')
     .get(protect, getOnlyTour)
     .post(protect, restrict('user', 'admin'), reviewController.createNewReview)
-    .patch(protect, restrict('user', 'admin'), reviewController.updateReviewAd)
+    .patch(
+        protect,
+        restrict('user', 'admin'),
+        reviewController.updateReviewDirect
+    )
     .delete(
         protect,
         restrict('user', 'admin'),
-        reviewController.deleteReviewAd
+        reviewController.deleteReviewDirect
     );
 
 router.route('/:tourId/reviews/:id').get(protect, getOnlyATour);

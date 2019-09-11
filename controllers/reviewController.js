@@ -76,7 +76,7 @@ exports.updateReview = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.updateReviewAd = catchAsync(async (req, res, next) => {
+exports.updateReviewDirect = catchAsync(async (req, res, next) => {
     const review = await Review.findOneAndUpdate(
         {
             tour: req.params.tourId,
@@ -103,8 +103,7 @@ exports.updateReviewAd = catchAsync(async (req, res, next) => {
 exports.deleteReview = catchAsync(async (req, res, next) => {
     const review = await Review.findByIdAndDelete(req.params.id);
 
-    if (!review)
-        return next(new AppError('No review found for this tour', 404));
+    if (!review) return next(new AppError('No review found for this ID', 404));
 
     res.status(204).json({
         status: 'success',
@@ -112,13 +111,14 @@ exports.deleteReview = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.deleteReviewAd = catchAsync(async (req, res, next) => {
+exports.deleteReviewDirect = catchAsync(async (req, res, next) => {
     const review = await Review.findOneAndDelete({
         tour: req.params.tourId,
         user: req.currentUser._id
     });
 
-    if (!review) return next(new AppError('No review found for this ID', 404));
+    if (!review)
+        return next(new AppError('No review found for this tour', 404));
 
     res.status(204).json({
         status: 'success',
