@@ -1,4 +1,4 @@
-const fs = require('fs');
+// const fs = require('fs');
 const Review = require('./../models/reviewModel');
 const APIFeatures = require('./../utils/apiFeatures');
 const catchAsync = require('./../utils/catchAsync');
@@ -44,6 +44,13 @@ exports.getReview = catchAsync(async (req, res, next) => {
 });
 
 exports.createNewReview = catchAsync(async (req, res, next) => {
+    if (req.params.tourId && (req.body.tour || req.body.user))
+        return next(
+            new AppError('you can not create a review for another user', 403)
+        );
+    if (!req.body.tour) req.body.tour = req.params.tourId;
+    if (!req.body.user) req.body.user = req.currentUser._id;
+
     const newReview = await Review.create(req.body);
 
     res.status(201).json({
@@ -69,8 +76,47 @@ exports.updateReview = catchAsync(async (req, res, next) => {
     });
 });
 
+exports.updateReviewAd = catchAsync(async (req, res, next) => {
+    const review = await Review.findOneAndUpdate(
+        {
+            tour: req.params.tourId,
+            user: req.currentUser._id
+        },
+        req.body,
+        {
+            new: true,
+            runValidators: true
+        }
+    );
+
+    if (!review)
+        return next(new AppError('No review found for this tour', 404));
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            review
+        }
+    });
+});
+
 exports.deleteReview = catchAsync(async (req, res, next) => {
     const review = await Review.findByIdAndDelete(req.params.id);
+
+    if (!review)
+        return next(new AppError('No review found for this tour', 404));
+
+    res.status(204).json({
+        status: 'success',
+        data: null
+    });
+});
+
+exports.deleteReviewAd = catchAsync(async (req, res, next) => {
+    const review = await Review.findOneAndDelete({
+        tour: req.params.tourId,
+        user: req.currentUser._id
+    });
 
     if (!review) return next(new AppError('No review found for this ID', 404));
 

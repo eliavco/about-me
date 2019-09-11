@@ -143,6 +143,12 @@ const tourSchema = new mongoose.Schema(
     }
 );
 
+tourSchema.virtual('reviews', {
+    ref: 'Review',
+    foreignField: 'tour',
+    localField: '_id'
+});
+
 tourSchema.virtual('durationWeeks').get(function() {
     return Math.floor((this.duration / 7) * 10) / 10;
 });
@@ -153,9 +159,17 @@ tourSchema.virtual('endDates').get(function() {
         el.setDate(el.getDate() + that.duration);
         return el;
     };
+
     const endDates = this.startDates.map(endCalc);
     return endDates;
 });
+
+// tourSchema.pre(/^find/, function(next) {
+//     this.populate({
+//         path: 'reviews'
+//     });
+//     next();
+// });
 
 tourSchema.pre('save', function(next) {
     this.slug = slugify(this.name, { lower: true });
@@ -203,6 +217,9 @@ tourSchema.pre(/^find/, function(next) {
     this.populate({
         path: 'guides',
         select: '-__v -passwordChangedAt'
+    }).populate({
+        path: 'reviews',
+        select: '-__v'
     });
     next();
 });

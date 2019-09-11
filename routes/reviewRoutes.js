@@ -9,23 +9,17 @@ const { protect, restrict } = authController;
 router
     .route('/')
     .get(protect, reviewController.getAllReviews)
-    .post(
-        protect,
-        restrict('admin', 'lead-guide'),
-        reviewController.createNewReview
-    );
+    .post(protect, restrict('admin'), reviewController.createNewReview);
 
-router.route('/stats').get(protect, reviewController.getStats);
+router
+    .route('/stats')
+    .get(protect, restrict('admin', 'lead-guide'), reviewController.getStats);
 
 // ID HAS TO BE THE LAST
 router
     .route('/:id')
     .get(protect, reviewController.getReview)
-    .patch(
-        protect,
-        restrict('admin', 'lead-guide'),
-        reviewController.updateReview
-    )
+    .patch(protect, restrict('admin'), reviewController.updateReview)
     .delete(
         protect,
         restrict('admin', 'lead-guide'),

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+// const Tour = require('./tourModel');
 // const User = require('./userModel');
 // const validator = require('validator');
 
@@ -8,7 +9,6 @@ const reviewSchema = new mongoose.Schema(
         title: {
             type: String,
             required: [true, 'A review must have a title'],
-            unique: true,
             trim: true,
             maxlength: [40, 'Your review title is too long'],
             // validate: [validator.isAlpha, 'A title has to contain only letters'],
@@ -24,12 +24,14 @@ const reviewSchema = new mongoose.Schema(
         user: {
             type: mongoose.Schema.ObjectId,
             ref: 'User',
-            required: [true, 'A review must belong to a user']
+            required: [true, 'A review must belong to a user'],
+            unique: false
         },
         tour: {
             type: mongoose.Schema.ObjectId,
             ref: 'Tour',
-            required: [true, 'A review must belong to a tour']
+            required: [true, 'A review must belong to a tour'],
+            unique: false
         },
         theme: {
             type: String,
@@ -61,5 +63,22 @@ reviewSchema.pre('save', function(next) {
     next();
 });
 
+reviewSchema.pre(/^find/, function(next) {
+    this
+        // .populate({
+        //     path: 'tour',
+        //     // populate: {
+        //     //     path: 'guides'
+        //     // },
+        //     select: 'name guides'
+        // })
+        .populate({
+            path: 'user',
+            select: 'name photo'
+        });
+    next();
+});
+
+reviewSchema.index({ user: 1, tour: 1 }, { unique: true });
 const Review = mongoose.model('Review', reviewSchema);
 module.exports = Review;
