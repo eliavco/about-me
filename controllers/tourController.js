@@ -8,7 +8,7 @@ exports.getTour = factory.getOne(Tour, true);
 
 exports.createNewTour = factory.createOne(Tour);
 
-exports.updateTour = catchAsync(async (req, res, next) => {
+exports.updateTourF = catchAsync(async (req, res, next) => {
     req.upDoc = await Tour.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
         runValidators: true,
@@ -16,7 +16,7 @@ exports.updateTour = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.updateTour = factory.updateOne;
+exports.updateTourS = factory.updateOne;
 
 exports.deleteTourF = catchAsync(async (req, res, next) => {
     req.delDoc = await Tour.findByIdAndDelete(req.params.id);
