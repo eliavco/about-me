@@ -1,7 +1,9 @@
 const express = require('express');
 
 const app = express();
+const path = require('path');
 const helmet = require('helmet');
+// const sassMiddleware = require('express-sass-middleware');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
@@ -14,6 +16,21 @@ const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
+
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
+// app.use(express.static(`${__dirname}/public`));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// app.get(
+//     path.join(__dirname, 'public/css/style.css'),
+//     sassMiddleware({
+//         file: path.join(__dirname, 'public/css/sass/style.scss'),
+//         precompile: true,
+//         outputStyle: 'compressed'
+//     })
+// );
 
 app.use(helmet());
 if (process.env.NODE_ENV !== 'production') app.use(morgan('dev'));
@@ -45,7 +62,6 @@ app.use(
         limit: '10kb'
     })
 );
-app.use(express.static(`${__dirname}/public`));
 
 app.use('api/v1/users/login', mongoSanitize());
 app.use('api/v1/users/signup', mongoSanitize());
@@ -78,6 +94,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Routes Middleware
+app.get('/', (req, res) => {
+    res.status(200).render('base');
+});
 app.use(`/api`, apiDocRouter);
 app.use(`/api/v${apiVersion}/tours`, tourRouter);
 app.use(`/api/v${apiVersion}/users`, userRouter);
