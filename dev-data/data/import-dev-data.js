@@ -51,6 +51,22 @@ const importData = async () => {
     }
     process.exit();
 };
+const delNImpoetData = async () => {
+    try {
+        await Tour.deleteMany();
+        await User.deleteMany();
+        await Review.deleteMany();
+        await Tour.create(tours);
+        await User.create(users);
+        await Review.create(reviews);
+        // eslint-disable-next-line no-console
+        console.log('Data successfully deleted and loaded loaded');
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error);
+    }
+    process.exit();
+};
 const deleteData = async () => {
     try {
         await Tour.deleteMany();
@@ -69,5 +85,7 @@ if (process.argv[2] === '--delete') {
     deleteData();
 } else if (process.argv[2] === '--import') {
     importData();
+} else if (process.argv[2] === '--empop') {
+    delNImpoetData();
 }
 // console.log(process.argv);

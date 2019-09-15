@@ -7,6 +7,7 @@
     "start:dev": "nodemon server.js",
     "start:prod": "cross-env NODE_ENV=\"production\" nodemon server.js",
     "start:debug": "ndb server.js",
+    "emptyAndPopulateData": "node dev-data/data/import-dev-data.js --empop",
     "emptyData": "node dev-data/data/import-dev-data.js --delete",
     "populateData": "node dev-data/data/import-dev-data.js --import",
     "deleteDocumentation": "node dev-data/data/import-dev-data-docs.js --delete",

@@ -30,7 +30,7 @@ exports.getAll = Model =>
             results: {
                 documents: `${
                     documents.length
-                } results out of ${await Model.count()}`
+                } results out of ${await Model.countDocuments()}`
             },
             currentUser: {
                 id: req.currentUser._id,

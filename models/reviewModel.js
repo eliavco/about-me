@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Tour = require('./../models/tourModel');
 // const beautifyUnique = require('mongoose-beautiful-unique-validation');
 
 const reviewSchema = new mongoose.Schema(
@@ -58,6 +59,40 @@ reviewSchema.pre(/^find/, function(next) {
             select: 'name photo'
         });
     next();
+});
+
+reviewSchema.statics.calcAverageRatings = async function(tourId) {
+    const stats = await this.aggregate([
+        {
+            $match: { tour: tourId }
+        },
+        {
+            $group: {
+                _id: '$tour',
+                nRatings: { $sum: 1 },
+                avgRatings: { $avg: '$rating' }
+            }
+        }
+    ]);
+    await Tour.findByIdAndUpdate(tourId, {
+        ratingsQuantity: stats[0].nRatings,
+        ratingsAverage: Math.floor(stats[0].avgRatings * 100) / 100
+    });
+};
+
+reviewSchema.post('save', function() {
+    this.constructor.calcAverageRatings(this.tour);
+});
+
+reviewSchema.pre(/^findOneAnd/, async function(next) {
+    this.r = await this.findOne();
+
+    next();
+});
+
+reviewSchema.post(/^findOneAnd/, async function() {
+    // await this.findOne(); does NOT work here, query has already executed
+    await this.r.constructor.calcAverageRatings(this.r.tour);
 });
 
 reviewSchema.index({ user: 1, tour: 1 }, { unique: true });
