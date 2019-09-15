@@ -229,5 +229,6 @@ tourSchema.pre('aggregate', function(next) {
     next();
 });
 
+tourSchema.index({ price: 1 }); // NOW every time we will search through the collection the price index will be cached and save us time as it is the most popular filter index but it is still very heavy in size (the 1 stands for ascending and descending), you can add options for the index in a second argument object
 const Tour = mongoose.model('Tour', tourSchema);
 module.exports = Tour;
