@@ -160,7 +160,7 @@ tourSchema.virtual('endDates').get(function() {
         return el;
     };
 
-    const endDates = this.startDates.map(endCalc);
+    const endDates = this.startDates ? this.startDates.map(endCalc) : [];
     return endDates;
 });
 

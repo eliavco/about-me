@@ -57,8 +57,8 @@ const getOnlyTour = (req, res, next) => {
 };
 
 const getOnlyATour = (req, res, next) => {
-    req.body = { query: 1, tour: req.params.tourId };
-    return reviewController.getReview(req, res, next);
+    req.body = { query: 1, tour: req.params.tourId, _id: req.params.id };
+    return reviewController.getAllReviews(req, res, next);
 };
 
 router

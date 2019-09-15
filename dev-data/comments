@@ -117,3 +117,183 @@
 // 		}
 //     ]
 // }
+
+// SECTION A //////////////////////////////////////////////////////////////////
+
+{
+    "status": "success",
+    "results": {
+        "documents": 1
+    },
+    "currentUser": {
+        "id": "5c8a1d5b0190b214360dc057",
+        "name": "Eliav Cohen",
+        "email": "eliav.s.cohen@gmail.com",
+        "role": "admin"
+    },
+    "data": {
+        "documents": [
+            {
+                "queryPlanner": {
+                    "plannerVersion": 1,
+                    "namespace": "natours.tours",
+                    "indexFilterSet": false,
+                    "parsedQuery": {
+                        "$and": [
+                            {
+                                "difficulty": {
+                                    "$eq": "easy"
+                                }
+                            },
+                            {
+                                "secretTour": {
+                                    "$not": {
+                                        "$eq": true
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "winningPlan": {
+                        "stage": "PROJECTION",
+                        "transformBy": {
+                            "__v": 0,
+                            "theme": 0,
+                            "createdAt": 0
+                        },
+                        "inputStage": {
+                            "stage": "SORT",
+                            "sortPattern": {
+                                "createdAt": -1
+                            },
+                            "limitAmount": 100,
+                            "inputStage": {
+                                "stage": "SORT_KEY_GENERATOR",
+                                "inputStage": {
+                                    "stage": "COLLSCAN",
+                                    "filter": {
+                                        "$and": [
+                                            {
+                                                "difficulty": {
+                                                    "$eq": "easy"
+                                                }
+                                            },
+                                            {
+                                                "secretTour": {
+                                                    "$not": {
+                                                        "$eq": true
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "direction": "forward"
+                                }
+                            }
+                        }
+                    },
+                    "rejectedPlans": []
+                },
+                "executionStats": {
+                    "executionSuccess": true,
+                    "nReturned": 4,
+                    "executionTimeMillis": 26,
+                    "totalKeysExamined": 0,
+                    "totalDocsExamined": 9,
+                    "executionStages": {
+                        "stage": "PROJECTION",
+                        "nReturned": 4,
+                        "executionTimeMillisEstimate": 0,
+                        "works": 17,
+                        "advanced": 4,
+                        "needTime": 12,
+                        "needYield": 0,
+                        "saveState": 0,
+                        "restoreState": 0,
+                        "isEOF": 1,
+                        "invalidates": 0,
+                        "transformBy": {
+                            "__v": 0,
+                            "theme": 0,
+                            "createdAt": 0
+                        },
+                        "inputStage": {
+                            "stage": "SORT",
+                            "nReturned": 4,
+                            "executionTimeMillisEstimate": 0,
+                            "works": 17,
+                            "advanced": 4,
+                            "needTime": 12,
+                            "needYield": 0,
+                            "saveState": 0,
+                            "restoreState": 0,
+                            "isEOF": 1,
+                            "invalidates": 0,
+                            "sortPattern": {
+                                "createdAt": -1
+                            },
+                            "memUsage": 6215,
+                            "memLimit": 33554432,
+                            "limitAmount": 100,
+                            "inputStage": {
+                                "stage": "SORT_KEY_GENERATOR",
+                                "nReturned": 4,
+                                "executionTimeMillisEstimate": 0,
+                                "works": 12,
+                                "advanced": 4,
+                                "needTime": 7,
+                                "needYield": 0,
+                                "saveState": 0,
+                                "restoreState": 0,
+                                "isEOF": 1,
+                                "invalidates": 0,
+                                "inputStage": {
+                                    "stage": "COLLSCAN",
+                                    "filter": {
+                                        "$and": [
+                                            {
+                                                "difficulty": {
+                                                    "$eq": "easy"
+                                                }
+                                            },
+                                            {
+                                                "secretTour": {
+                                                    "$not": {
+                                                        "$eq": true
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "nReturned": 4,
+                                    "executionTimeMillisEstimate": 0,
+                                    "works": 11,
+                                    "advanced": 4,
+                                    "needTime": 6,
+                                    "needYield": 0,
+                                    "saveState": 0,
+                                    "restoreState": 0,
+                                    "isEOF": 1,
+                                    "invalidates": 0,
+                                    "direction": "forward",
+                                    "docsExamined": 9
+                                }
+                            }
+                        }
+                    },
+                    "allPlansExecution": []
+                },
+                "serverInfo": {
+                    "host": "LAPTOP-FM4DDD46",
+                    "port": 27017,
+                    "version": "4.0.11",
+                    "gitVersion": "417d1a712e9f040d54beca8e4943edce218e9a8c"
+                },
+                "ok": 1
+            }
+        ]
+    }
+}
+
+// EXAMPLE FOR FILTERING IN COMPASS
+{ tour: ObjectId('5c88fa8cf4afda39709c2951'), user: ObjectId('5c8a24282f8fb814b56fa18f') }

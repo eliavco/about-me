@@ -60,11 +60,25 @@ exports.getUser = factory.getOne(User, false);
 exports.createNewUser = factory.createOne(User);
 
 exports.updateUserF = catchAsync(async (req, res, next) => {
+    const { password, passwordConfirm } = req.body;
+    delete req.body.password;
+    delete req.body.passwordConfirm;
+
     req.upDoc = await User.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
         runValidators: true,
         upsert: true
     });
+
+    if (password || passwordConfirm) {
+        const user = await User.findById(req.params.id).select('+password');
+
+        console.log(user);
+        user.password = password;
+        user.passwordConfirm = passwordConfirm;
+        await user.save();
+    }
+
     next();
 });
 

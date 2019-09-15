@@ -22,11 +22,15 @@ exports.getAll = Model =>
             .paginate();
 
         const documents = await features.query;
+        // const documents = await features.query.explain();
+        // results above in section a of comments file under dev-data
 
         res.status(200).json({
             status: 'success',
             results: {
-                documents: documents.length
+                documents: `${
+                    documents.length
+                } results out of ${await Model.count()}`
             },
             currentUser: {
                 id: req.currentUser._id,

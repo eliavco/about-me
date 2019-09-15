@@ -2,7 +2,7 @@ What To Do that Jonas missed:
         done - adding or operators to url query api
         done - adding api documentation for every api version
         done - fix broken alias 
-    - give people a way to restore their deleted account
+        done - give people a way to restore their deleted account
     - filling documentation
     - templating documentation
     - creative 404
@@ -22,5 +22,5 @@ What To Do that Jonas missed:
         done - factory handler
     - fix bugs:
         done - add reviews propely'
-        - test all the endpoints
-        - fix limitng fields bug
+        done - test all the endpoints
+        done - fix limitng fields bug

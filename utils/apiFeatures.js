@@ -42,7 +42,6 @@ class APIFeatures {
                 fields.push('-__v');
             }
             fields = fields.join(' ');
-
             this.query = this.query.select(fields);
         } else {
             this.query = this.query.select('-__v');

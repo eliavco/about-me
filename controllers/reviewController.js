@@ -1,4 +1,4 @@
-const fs = require('fs');
+// const fs = require('fs');
 const Review = require('./../models/reviewModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
@@ -22,7 +22,7 @@ exports.createNewReview = factory.createOne(Review);
 
 exports.updateReviewF = catchAsync(async (req, res, next) => {
     if (req.params.tourId) {
-        req.review = await Review.findOneAndUpdate(
+        req.upDoc = await Review.findOneAndUpdate(
             {
                 tour: req.params.tourId,
                 user: req.currentUser._id
@@ -34,7 +34,7 @@ exports.updateReviewF = catchAsync(async (req, res, next) => {
             }
         );
     } else {
-        req.review = await Review.findByIdAndUpdate(req.params.id, req.body, {
+        req.upDoc = await Review.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true,
             upsert: true

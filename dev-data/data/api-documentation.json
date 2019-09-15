@@ -39,7 +39,9 @@
             },
             "users": {
                 "getAll": "To access all users send request to '/api/v1/users' using GET method",
-                "getById": "To access a certain user by its ID, add the ID as a new slash '/api/v1/users/:id' using GET method",
+                "getById": "To access a certain user by their ID, add the ID as a new slash '/api/v1/users/:id' using GET method",
+                
+                "getMyInfo": "To access your user information, go to '/api/v1/users/me' using GET method",
 
                 "getFiltered-1": "To access all users matching a certain query where properties equal other properties send request to '/api/v1/users' using GET method and add your query at the end starting with a question mark and then key value pairs: '?key=value&price=997'",
                 "getFiltered-2": "To access all users matching a certain query where properties relate to other properties send request to '/api/v1/users' using GET method and add your advanced query at the end starting with a question mark and then key value pairs with the right operator in square brackets: '?key=value&price[gt]=997', your options are: (NO_BRACKETS - equals =), (gt - greater than >), (lt - less than <), (gte - greater than or equals >=), (lte - less than or equals <=)",
@@ -56,7 +58,7 @@
                 "aggregate": "To access users statistics send request to '/api/v1/users/stats' using GET method, add your JSON aggregation array as a request.body.stages! For more information about aggregation object go to MongoDB and Mongoose documentations online."
             },
             "reviews": {
-                "basics": "You can either go to /api/v1/reviews (Solution A) or to /api/v1/tours/:tourId/reviews Solution B) to achieve the same result for a specific tour",
+                "basics": "You can either go to /api/v1/reviews (Solution A) or to /api/v1/tours/:tourId/reviews (Solution B) to achieve the same result for a specific tour",
 
                 "getAll": "To access all reviews send request to '/api/v1/reviews' using GET method",
                 "getById": "To access a certain review by its ID, add the ID as a new slash '/api/v1/reviews/:id' using GET method",

@@ -207,6 +207,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
     user.password = newPassword;
     user.passwordConfirm = newPasswordConfirm;
+
     await user.save();
 
     createSendToken(user, 200, res);
