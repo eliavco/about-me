@@ -56,9 +56,11 @@ const deleteData = async () => {
         await Tour.deleteMany();
         await User.deleteMany();
         await Review.deleteMany();
-        // console.log('Data successfully deleted');
+        // eslint-disable-next-line no-console
+        console.log('Data successfully deleted');
     } catch (error) {
-        // console.log(error);
+        // eslint-disable-next-line no-console
+        console.log(error);
     }
     process.exit();
 };

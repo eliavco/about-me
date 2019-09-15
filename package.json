@@ -9,8 +9,8 @@
     "start:debug": "ndb server.js",
     "emptyData": "node dev-data/data/import-dev-data.js --delete",
     "populateData": "node dev-data/data/import-dev-data.js --import",
-    "emptyDocs": "node dev-data/data/import-dev-data-docs.js --delete",
-    "populateDocs": "node dev-data/data/import-dev-data-docs.js --import"
+    "deleteDocumentation": "node dev-data/data/import-dev-data-docs.js --delete",
+    "writeDocumentation": "node dev-data/data/import-dev-data-docs.js --import"
   },
   "repository": {
     "type": "git",
