@@ -8,6 +8,7 @@ const hpp = require('hpp');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const apiDocRouter = require('./routes/apiDocRoutes');
+// const rewriteDocs = require('./dev-data/data/import-dev-data-docs');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
@@ -16,6 +17,8 @@ const AppError = require('./utils/appError');
 
 app.use(helmet());
 if (process.env.NODE_ENV !== 'production') app.use(morgan('dev'));
+
+// rewriteDocs.rewriteData();
 
 const limiter = rateLimit({
     max: 100,

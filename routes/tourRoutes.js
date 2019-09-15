@@ -19,7 +19,7 @@ const { protect, restrict } = authController;
 
 router
     .route('/')
-    .get(protect, tourController.getAllTours)
+    .get(tourController.getAllTours)
     .post(
         /*tourController.checkBody,*/ protect,
         restrict('admin', 'lead-guide'),
@@ -29,6 +29,15 @@ router
 router
     .route('/top-5-cheap')
     .get(protect, tourController.alias, tourController.getAllTours);
+
+router
+    .route('/within/:distance/center/:latlng/unit/:unit')
+    .get(protect, tourController.getToursWithin);
+// tours/within/233/center/-44,32/unit/mi
+
+router
+    .route('/distances/:latlng/unit/:unit')
+    .get(protect, tourController.getToursDistance);
 
 router.route('/stats').get(protect, tourController.getStats);
 

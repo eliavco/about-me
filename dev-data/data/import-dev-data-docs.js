@@ -44,8 +44,34 @@ const docs = {
 const importData = async () => {
     try {
         await Documentation.create(docs);
-        // console.log('Data successfully loaded');
+        // eslint-disable-next-line no-console
+        console.log('Docs successfully loaded');
     } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error);
+    }
+    process.exit();
+};
+const rewriteData = async () => {
+    try {
+        await Documentation.deleteMany();
+        await Documentation.create(docs);
+        // eslint-disable-next-line no-console
+        console.log('Docs successfully deleted and reloaded');
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error);
+    }
+    process.exit();
+};
+exports.rewriteData = async () => {
+    try {
+        await Documentation.deleteMany();
+        await Documentation.create(docs);
+        // eslint-disable-next-line no-console
+        // console.log('Docs successfully deleted and reloaded');
+    } catch (error) {
+        // eslint-disable-next-line no-console
         // console.log(error);
     }
     process.exit();
@@ -53,9 +79,11 @@ const importData = async () => {
 const deleteData = async () => {
     try {
         await Documentation.deleteMany();
-        // console.log('Data successfully deleted');
+        // eslint-disable-next-line no-console
+        console.log('Docs successfully deleted');
     } catch (error) {
-        // console.log(error);
+        // eslint-disable-next-line no-console
+        console.log(error);
     }
     process.exit();
 };
@@ -64,5 +92,7 @@ if (process.argv[2] === '--delete') {
     deleteData();
 } else if (process.argv[2] === '--import') {
     importData();
+} else if (process.argv[2] === '--empop') {
+    rewriteData();
 }
 // console.log(process.argv);

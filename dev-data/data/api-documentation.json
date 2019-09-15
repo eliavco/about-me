@@ -5,6 +5,9 @@
             "tours": {
                 "getAll": "To access all tours send request to '/api/v1/tours' using GET method",
                 "getById": "To access a certain tour by its ID, add the ID as a new slash '/api/v1/tours/:id' using GET method",
+                
+                "getClose": "To find tours around you, GET 'api/v1/tours/within/:distance/center/:latlng/unit/:unit'",
+                "getDistance": "To find distance to tours, GET 'api/v1/tours/distances/:latlng/unit/:unit'",
 
                 "getFiltered-1": "To access all tours matching a certain query where properties equal other properties send request to '/api/v1/tours' using GET method and add your query at the end starting with a question mark and then key value pairs: '?key=value&price=997'",
                 "getFiltered-2": "To access all tours matching a certain query where properties relate to other properties send request to '/api/v1/tours' using GET method and add your advanced query at the end starting with a question mark and then key value pairs with the right operator in square brackets: '?key=value&price[gt]=997', your options are: (NO_BRACKETS - equals =), (gt - greater than >), (lt - less than <), (gte - greater than or equals >=), (lte - less than or equals <=)",

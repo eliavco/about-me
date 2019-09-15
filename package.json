@@ -10,6 +10,7 @@
     "emptyAndPopulateData": "node dev-data/data/import-dev-data.js --empop",
     "emptyData": "node dev-data/data/import-dev-data.js --delete",
     "populateData": "node dev-data/data/import-dev-data.js --import",
+    "rewriteDocumentation": "node dev-data/data/import-dev-data-docs.js --empop",
     "deleteDocumentation": "node dev-data/data/import-dev-data-docs.js --delete",
     "writeDocumentation": "node dev-data/data/import-dev-data-docs.js --import"
   },
