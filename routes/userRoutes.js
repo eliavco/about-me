@@ -6,6 +6,7 @@ const router = express.Router();
 
 // eslint-disable-next-line no-unused-vars
 const { protect, restrict } = authController;
+// router.use(protect);
 
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
@@ -14,7 +15,7 @@ router.patch('/updatePassword', protect, authController.updatePassword);
 
 router.patch('/updateInfo', protect, userController.updateMe);
 
-router.delete('/deleteMe', protect, userController.deleteMe);
+router.get('/me', protect, userController.getMe);
 router.delete('/deleteMe', protect, userController.deleteMe);
 
 router.patch('/promote', protect, authController.getPromoted);

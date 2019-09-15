@@ -1,20 +1,8 @@
 const mongoose = require('mongoose');
-const slugify = require('slugify');
-// const Tour = require('./tourModel');
-// const User = require('./userModel');
-// const validator = require('validator');
+// const beautifyUnique = require('mongoose-beautiful-unique-validation');
 
 const reviewSchema = new mongoose.Schema(
     {
-        title: {
-            type: String,
-            required: [true, 'A review must have a title'],
-            trim: true,
-            maxlength: [40, 'Your review title is too long'],
-            // validate: [validator.isAlpha, 'A title has to contain only letters'],
-            minlength: [7, 'Your review title is too short']
-        },
-        slug: String,
         rating: {
             type: Number,
             default: 4.5,
@@ -24,14 +12,12 @@ const reviewSchema = new mongoose.Schema(
         user: {
             type: mongoose.Schema.ObjectId,
             ref: 'User',
-            required: [true, 'A review must belong to a user'],
-            unique: false
+            required: [true, 'A review must belong to a user']
         },
         tour: {
             type: mongoose.Schema.ObjectId,
             ref: 'Tour',
-            required: [true, 'A review must belong to a tour'],
-            unique: false
+            required: [true, 'A review must belong to a tour']
         },
         theme: {
             type: String,
@@ -58,11 +44,6 @@ const reviewSchema = new mongoose.Schema(
     }
 );
 
-reviewSchema.pre('save', function(next) {
-    this.slug = slugify(this.title, { lower: true });
-    next();
-});
-
 reviewSchema.pre(/^find/, function(next) {
     this
         // .populate({
@@ -80,5 +61,7 @@ reviewSchema.pre(/^find/, function(next) {
 });
 
 reviewSchema.index({ user: 1, tour: 1 }, { unique: true });
+// What I eventually did with the problematic UNIQUE INDEXES i couldnt find anywhere was to go to INDEXES tab on compass
+// reviewSchema.plugin(beautifyUnique);
 const Review = mongoose.model('Review', reviewSchema);
 module.exports = Review;

@@ -20,3 +20,7 @@ What To Do that Jonas missed:
         done - learning about advanced stuff like cookies
         done - learn how to have a property on mongoose used in another property automatically
         done - factory handler
+    - fix bugs:
+        done - add reviews propely'
+        - test all the endpoints
+        - fix limitng fields bug

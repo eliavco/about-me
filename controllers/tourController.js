@@ -14,12 +14,14 @@ exports.updateTourF = catchAsync(async (req, res, next) => {
         runValidators: true,
         upsert: true
     });
+    next();
 });
 
 exports.updateTourS = factory.updateOne;
 
 exports.deleteTourF = catchAsync(async (req, res, next) => {
     req.delDoc = await Tour.findByIdAndDelete(req.params.id);
+    next();
 });
 
 exports.deleteTourS = factory.deleteOne('tour');

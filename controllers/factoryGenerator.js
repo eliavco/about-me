@@ -93,6 +93,13 @@ exports.deleteOne = name =>
         });
     });
 
+exports.getMe = catchAsync(async (req, res, next) => {
+    res.status(200).json({
+        status: 'success',
+        data: req.currentUser
+    });
+});
+
 exports.getDoc = catchAsync(async (req, res, next) => {
     // const documentation = await JSON.parse(
     //     fs.readFileSync(

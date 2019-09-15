@@ -13,6 +13,8 @@ const filterObj = (object, ...allowedFields) => {
 
 exports.getAllUsers = factory.getAll(User);
 
+exports.getMe = factory.getMe;
+
 exports.updateMe = catchAsync(async (req, res, next) => {
     if (
         req.body.password ||
@@ -63,12 +65,14 @@ exports.updateUserF = catchAsync(async (req, res, next) => {
         runValidators: true,
         upsert: true
     });
+    next();
 });
 
 exports.updateUserS = factory.updateOne;
 
 exports.deleteUserF = catchAsync(async (req, res, next) => {
     req.delDoc = await User.findByIdAndDelete(req.params.id);
+    next();
 });
 
 exports.deleteUserS = factory.deleteOne('user');
