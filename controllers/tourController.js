@@ -110,6 +110,7 @@ exports.getToursDistance = catchAsync(async (req, res, next) => {
             role: req.currentUser.role
         },
         data: {
+            unit: unit === 'mi' ? 'miles' : 'kilometers',
             distances
         }
     });
