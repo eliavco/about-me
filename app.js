@@ -1,9 +1,9 @@
 const express = require('express');
 
-const app = express();
 const path = require('path');
 const helmet = require('helmet');
-// const sassMiddleware = require('express-sass-middleware');
+const sassMiddleware = require('node-sass-middleware');
+// const sass = require('node-sass');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
@@ -17,20 +17,28 @@ const reviewRouter = require('./routes/reviewRoutes');
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 
+const app = express();
+
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // app.use(express.static(`${__dirname}/public`));
-app.use(express.static(path.join(__dirname, 'public')));
 
-// app.get(
-//     path.join(__dirname, 'public/css/style.css'),
-//     sassMiddleware({
-//         file: path.join(__dirname, 'public/css/sass/style.scss'),
-//         precompile: true,
-//         outputStyle: 'compressed'
-//     })
-// );
+//         src: './public/css/sass/style.scss',
+//         dest: './public/css/style.css',
+
+app.use(
+    sassMiddleware({
+        src: __dirname,
+        dest: path.join(__dirname, 'public'),
+        debug: process.env.NODE_ENV !== 'production',
+        indentedSyntax: false,
+        outputStyle: 'compressed',
+        sourceMap: true
+    })
+);
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(helmet());
 if (process.env.NODE_ENV !== 'production') app.use(morgan('dev'));
@@ -95,7 +103,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // Routes Middleware
 app.get('/', (req, res) => {
-    res.status(200).render('base');
+    res.status(200).render('base', { tour: 'The Park Camper', user: 'Eliav' });
 });
 app.use(`/api`, apiDocRouter);
 app.use(`/api/v${apiVersion}/tours`, tourRouter);
