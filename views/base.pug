@@ -7,8 +7,18 @@ html(lang='en')
         link(href='https://fonts.googleapis.com/css?family=Lato:300,300i,700', rel='stylesheet')
         link(rel='stylesheet', href='css/style.css')
         link(rel='shortcut icon', href='img/favicon.png', type='image/png')
-        title Natours | Exciting tours for adventurous people
+        title Natours | #{title}
 
     body
-        h1= tour
-        p This is just some text
+        // HEADER
+        include layout/_header
+        
+
+        // SECTION
+        main.main
+            block content
+                h1 This is a placeholder
+
+        // FOOTER
+        include layout/_footer
+        
