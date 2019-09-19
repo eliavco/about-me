@@ -1,0 +1,5 @@
+mixin guideBox(role, name, image)
+    .overview-box__detail
+        img.overview-box__img(src=`/img/users/${image}`, alt=`${role}`)
+        span.overview-box__label= role
+        span.overview-box__text= name

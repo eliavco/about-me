@@ -1,3 +1,10 @@
 extends base
+
+block append head
+    // script(src='/js/mapbox.js')
+
 block content
-    h1= tour
+    include components/_tourTemplate
+
+block bottom
+    script(src='/js/mapbox.js')
