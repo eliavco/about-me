@@ -49,11 +49,11 @@ section.section-description
 section.section-pictures
   each img, i in tour.images
     .picture-box
-      img.picture-box__img(src=`/img/tours/${img}`, alt=`${tour.name} Tour ${i + 1}` class=`picture-box__img--${i}`)
+      img.picture-box__img(src=`/img/tours/${img}`, alt=`${tour.name} Tour ${i + 1}` class=`picture-box__img--${i + 1}`)
 
 section.section-map
   - const locations = (tour.startLocation && tour.locations[0]) ? [tour.startLocation, ...tour.locations] : [];
-  #map(data-locations=`${JSON.stringify(locations)}`)
+  #map(data-locations=`${JSON.stringify(locations)}`, data-duration=`${tour.duration}`)
 
 section.section-reviews
   .reviews

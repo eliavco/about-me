@@ -365,8 +365,42 @@ body {
   width: 100%;
 }
 
+.link-google-maps:link, 
+.link-google-maps:visited {
+  // color: #8D99AE;
+  color: #868D99;
+  text-decoration: none;
+  border-bottom: #8D99AE 1px solid;
+  display: inline-block;
+  padding-bottom: 1px;
+  margin-left: 4px;
+  transition: all .6s;
+}
+
+.link-google-maps:hover, 
+.link-google-maps:active {
+  color: #8D99AE;
+  // color: #868D99;
+  border-bottom-color: #8D99AE;
+  padding-bottom: 2px;
+}
+
 .marker {
   background-image: url('../img/pin.png');
+  background-size: cover;
+  width: 32px;
+  height: 40px;
+  cursor: pointer;
+}
+.marker-end {
+  background-image: url('../img/flag.png');
+  background-size: cover;
+  width: 32px;
+  height: 40px;
+  cursor: pointer;
+}
+.marker-start {
+  background-image: url('../img/walk.png');
   background-size: cover;
   width: 32px;
   height: 40px;

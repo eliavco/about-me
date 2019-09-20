@@ -25,6 +25,14 @@ exports.getAll = Model =>
         // const documents = await features.query.explain();
         // results above in section a of comments file under dev-data
 
+        if (!req.currentUser)
+            req.currentUser = {
+                _id: '',
+                name: '',
+                email: '',
+                role: ''
+            };
+
         res.status(200).json({
             status: 'success',
             results: {

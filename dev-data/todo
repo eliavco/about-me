@@ -26,3 +26,5 @@ What To Do that Jonas missed:
         done - fix limitng fields bug
     - add search and filter for tours
     - when a tour date passes delete this tour date and rearrange the tour dates array
+    - use webpack to bundle scripts
+        done - fix section pictures

@@ -52,6 +52,13 @@
         "type": "Point",
         "coordinates": [-81.768719, 24.552242],
         "day": 5
+      },
+      {
+        "_id": "5c88fa8cf4afda39709c2943",
+        "description": "Disney Land",
+        "type": "Point",
+        "coordinates": [-81.597872, 28.3789561],
+        "day": 7
       }
     ]
   },
