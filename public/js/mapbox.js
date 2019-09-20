@@ -14,7 +14,9 @@ var map = new mapboxgl.Map({
     // style: './../../vendors/MapBox/Light(ck0rthbtb0ke21cqk87epl4ys)/style.json',
     // style: path.join(__dirname, 'vendors/MapBox/Light(ck0rthbtb0ke21cqk87epl4ys)/style.json'),
     // style: 'htttp://127.0.0.1:3000/vendors/MapBox/Light(ck0rthbtb0ke21cqk87epl4ys)/style.json',
-    logoPosition: 'bottom-right'
+    logoPosition: 'bottom-right',
+    scrollZoom: false,
+    // interactive: false
     // interactive: false,
     // zoom: 13,
     // center: [2.2871428, 48.8579466],

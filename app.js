@@ -8,6 +8,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 const rateLimit = require('express-rate-limit');
 const apiDocRouter = require('./routes/apiDocRoutes');
 // const rewriteDocs = require('./dev-data/data/import-dev-data-docs');
@@ -66,6 +67,7 @@ app.use(
         limit: '10kb'
     })
 );
+app.use(cookieParser());
 
 app.use('api/v1/users/login', mongoSanitize());
 app.use('api/v1/users/signup', mongoSanitize());
