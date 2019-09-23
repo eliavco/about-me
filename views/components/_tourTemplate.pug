@@ -14,7 +14,7 @@ section.section-header
       .heading-box__detail
         svg.heading-box__icon
           use(xlink:href='/img/icons.svg#icon-clock')
-        span.heading-box__text= tour.duration > 1 ? `${tour.duration} days` : '1 day'
+        span.heading-box__text= (tour.duration + 1) > 1 ? `${tour.duration + 1} days` : '1 day'
       .heading-box__detail
         svg.heading-box__icon
           use(xlink:href='/img/icons.svg#icon-map-pin')

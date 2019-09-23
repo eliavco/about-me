@@ -6,6 +6,8 @@ const router = express.Router();
 // eslint-disable-next-line no-unused-vars
 const { protect, restrict } = authController;
 
+router.use(authController.isLoggedIn);
+
 router.get('/', viewsController.getOverview);
 
 router.get('/overview', viewsController.getOverview);
