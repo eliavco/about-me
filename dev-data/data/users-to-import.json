@@ -5,7 +5,6 @@
     "email": "eliav.s.cohen@gmail.com",
     "role": "admin",
     "active": true,
-    "photo": "user-1.jpg",
     "password": "eliav100",
     "passwordConfirm": "eliav100"
   },

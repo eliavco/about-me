@@ -13,6 +13,7 @@ router.get('/', viewsController.getOverview);
 router.get('/overview', viewsController.getOverview);
 
 router.get('/login', viewsController.getLogin);
+router.get('/signup', viewsController.getSignup);
 
 router.get('/tour/:slug', /* protect, */ viewsController.getTour);
 

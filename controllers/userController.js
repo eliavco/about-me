@@ -73,7 +73,6 @@ exports.updateUserF = catchAsync(async (req, res, next) => {
     if (password || passwordConfirm) {
         const user = await User.findById(req.params.id).select('+password');
 
-        console.log(user);
         user.password = password;
         user.passwordConfirm = passwordConfirm;
         await user.save();
