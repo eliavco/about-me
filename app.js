@@ -59,14 +59,25 @@ const limiter = rateLimit({
     }
 });
 
+// Limit requests from IP
 app.use('/api', limiter);
 
-const apiVersion = 1;
+// JSON DECODING
 app.use(
     express.json({
         limit: '10kb'
     })
 );
+
+// Form Decoding
+app.use(
+    express.urlencoded({
+        extended: true,
+        limit: '10kb'
+    })
+);
+
+// Cookie decoding
 app.use(cookieParser());
 
 app.use('api/v1/users/login', mongoSanitize());
@@ -100,6 +111,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Routes Middleware
+const apiVersion = 1;
 app.use(`/api/v${apiVersion}/tours`, tourRouter);
 app.use(`/api/v${apiVersion}/users`, userRouter);
 app.use(`/api/v${apiVersion}/reviews`, reviewRouter);

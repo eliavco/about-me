@@ -35,7 +35,7 @@ export const signup = async (name, email, password, passwordConfirm) => {
     try {
         const res = await axios({
             method: 'POST',
-            url: '/api/v1/users',
+            url: '/api/v1/users/signup',
             data: {
                 name,
                 email,
@@ -69,8 +69,12 @@ export const logout = async () => {
             url: '/api/v1/users/logout'
         });
 
+        const defaultRoutes = [/^\/tour/, '/', '/login', '/signup'];
         // IF reload not set with true the browser might reload the page from the cache and not GET the current page again from the server
-        if (res.data.status === 'success') location.reload(true);
+        if (res.data.status === 'success') {
+            if (window.location.pathname in defaultRoutes) return location.reload(true);
+            return location.assign('/');
+        }
     } catch (err) {
         showAlert('error', 'Error while logging out! Please try again later.')
     }

@@ -4,17 +4,20 @@ const authController = require('./../controllers/authController');
 
 const router = express.Router();
 // eslint-disable-next-line no-unused-vars
-const { protect, restrict } = authController;
+const { protect, restrict, isLoggedIn } = authController;
 
-router.use(authController.isLoggedIn);
+// router.use(authController.isLoggedIn);
 
-router.get('/', viewsController.getOverview);
+router.get('/', isLoggedIn, viewsController.getOverview);
 
-router.get('/overview', viewsController.getOverview);
+router.get('/overview', isLoggedIn, viewsController.getOverview);
 
-router.get('/login', viewsController.getLogin);
-router.get('/signup', viewsController.getSignup);
+router.get('/login', isLoggedIn, viewsController.getLogin);
+router.get('/signup', isLoggedIn, viewsController.getSignup);
 
-router.get('/tour/:slug', /* protect, */ viewsController.getTour);
+router.get('/me', protect, viewsController.getAccount);
+router.post('/submit-user-data', protect, viewsController.updateUserData);
+
+router.get('/tour/:slug', isLoggedIn, viewsController.getTour);
 
 module.exports = router;

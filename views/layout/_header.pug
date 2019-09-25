@@ -17,10 +17,11 @@ header.header
     nav.nav.nav--user
         if user
             a.nav__el.nav__el--logout(href='/logout') Log Out
-            a.nav__el(href='#')
+            a.nav__el(href='/me')
                 - const photo = user.photo ? user.photo : 'default.jpg';
-                img.nav__user-img(src=`/img/users/${photo}` alt=`${user.name.split(' ')[0]} photo`)
-                span= user.name.split(' ')[0]
+                - const alt = user.name ? `${user.name.split(' ')[0]}` : 'User';
+                img.nav__user-img(src=`/img/users/${photo}` alt=`${alt} photo`)
+                span= alt
         else
             a.nav__el(href='/login') Log in
             a.nav__el.nav__el--cta(href='/signup') Sign up
