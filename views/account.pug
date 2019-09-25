@@ -30,7 +30,7 @@ block content
 				.user-view__form-container
 					h2.heading-secondary.ma-bt-md Your account settings
 					// The traditional way of using forms, less recomended by used in some cases
-					form.form.form-user-data(action='/submit-user-data', method='POST')
+					form.form.form-user-data(action='/submit-user-data', method='POST', enctype='multipart/form-data')
 						.form__group
 							label.form__label(for='name') Name
 							input#name.form__input(type='text', value=`${user.name}`, required, name='name')
@@ -41,7 +41,11 @@ block content
 						.form__group.form__photo-upload
 							- const alt = user.name ? `${user.name.split(' ')[0]}` : 'User';
 							img.form__user-photo(src=`/img/users/${user.photo ? user.photo : 'default.jpg'}` alt=`${alt} photo`)
-							a.btn-text(href='') Choose new photo
+							// This is called a mimetype mime like water in hebrew
+							input.form__upload(type='file', accept='image/*', id='photo', name='photo')
+							label#photo__label.btn-text(for='photo') Choose new photo
+							a#remove.btn-text(href='#') Remove Photo
+
 						.form__group.right
 							button.btn.btn--small.btn--green Save settings
 

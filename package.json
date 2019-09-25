@@ -4,7 +4,8 @@
   "description": "Learning Node.js, Express, and MongoDB",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon server.js",
+    "start:dev": "concurrently \"npm:startServer:dev\" \"npm:watch:js\" ",
+    "startServer:dev": "nodemon server.js",
     "start:prod": "cross-env NODE_ENV=\"production\" nodemon server.js",
     "start:debug": "ndb server.js",
     "build:js": "parcel ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
@@ -63,6 +64,7 @@
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
+    "concurrently": "^4.1.2",
     "cross-env": "^5.2.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.1",

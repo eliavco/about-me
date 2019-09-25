@@ -1,7 +1,56 @@
+const multer = require('multer');
+const sharp = require('sharp');
 const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const factory = require('./../controllers/factoryGenerator');
+
+// const multerDest = (req, file, cb) => {
+//     // First paramter: error or null
+//     cb(null, 'public/img/users');
+// };
+
+// const multerFile = (req, file, cb) => {
+//     const ext = file.mimetype.split('/')[1];
+//     // user-id12-124738timestamp.jpg
+//     cb(null, `user-${req.currentUser.id}-${Date.now()}.${ext}`);
+// };
+
+const multerFilter = (req, file, cb) => {
+    if (file.mimetype.startsWith('image')) {
+        cb(null, true);
+    } else {
+        cb(new AppError('Not an image, please upload only images', 400), false);
+    }
+};
+
+const multerStorage = multer.memoryStorage();
+
+// const multerStorage = multer.diskStorage({
+//     destination: multerDest,
+//     filename: multerFile
+// });
+
+const upload = multer({
+    storage: multerStorage,
+    fileFilter: multerFilter
+});
+
+exports.uploadUserPhoto = upload.single('photo');
+exports.resizeUserPhoto = (req, res, next) => {
+    if (!req.file) return next();
+
+    req.file.filename = `user-${req.currentUser.id}-${Date.now()}.jpeg`;
+
+    sharp(req.file.buffer)
+        .resize(500, 500)
+        .toFormat('jpeg')
+        // 90 percent image quality
+        // .jpeg({ quality: 90 });
+        .toFile(`public/img/users/${req.file.filename}`);
+
+    next();
+};
 
 const filterObj = (object, ...allowedFields) => {
     const newObj = {};
@@ -16,6 +65,7 @@ exports.getAllUsers = factory.getAll(User);
 exports.getMe = factory.getMe;
 
 exports.updateMe = catchAsync(async (req, res, next) => {
+    // console.log(req.file);
     if (
         req.body.password ||
         req.body.passwordConfirm ||
@@ -30,7 +80,8 @@ exports.updateMe = catchAsync(async (req, res, next) => {
             )
         );
 
-    const filteredBody = filterObj(req.body, 'name', 'email');
+    const filteredBody = filterObj(req.body, 'name', 'email', 'photo');
+    if (req.file) filteredBody.photo = req.file.filename;
     const updatedUser = await User.findByIdAndUpdate(
         req.currentUser.id,
         filteredBody,

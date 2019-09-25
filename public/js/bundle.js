@@ -8612,7 +8612,7 @@ exports.logout = logout;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateSettings = void 0;
+exports.removePhoto = exports.updateSettings = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -8680,6 +8680,64 @@ function () {
 }();
 
 exports.updateSettings = updateSettings;
+
+var removePhoto =
+/*#__PURE__*/
+function () {
+  var _ref2 = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee2(e) {
+    var res;
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            e.preventDefault();
+            _context2.next = 4;
+            return (0, _axios.default)({
+              method: 'PATCH',
+              url: '/api/v1/users/updateInfo',
+              data: {
+                photo: 'default.jpg'
+              }
+            });
+
+          case 4:
+            res = _context2.sent;
+
+            //
+            if (res.data.status === 'success') {
+              (0, _alerts.showAlert)('success', 'Photo Successfully Removed!');
+              setTimeout(function () {
+                location.reload(true);
+              }, 1500);
+            } //
+            // console.log(res);
+
+
+            _context2.next = 11;
+            break;
+
+          case 8:
+            _context2.prev = 8;
+            _context2.t0 = _context2["catch"](0);
+            (0, _alerts.showAlert)('error', _context2.t0.response.data.message); // console.log(err.response.data);
+
+          case 11:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, null, [[0, 8]]);
+  }));
+
+  return function removePhoto(_x3) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+
+exports.removePhoto = removePhoto;
 },{"axios":"../../node_modules/axios/index.js","./alerts":"alerts.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -8955,6 +9013,8 @@ var DOMUpdateInfoForm = document.querySelector('.form-user-data');
 var DOMUpdatePasswordForm = document.querySelector('.form-user-password');
 var DOMForm = document.querySelector('.form');
 var DOMLogoutBtn = document.querySelector('.nav__el--logout');
+var DOMPhoto = document.getElementById('photo');
+var DOMPhotoRemove = document.getElementById('remove');
 
 var signupForm =
 /*#__PURE__*/
@@ -9023,26 +9083,38 @@ function () {
   };
 }();
 
+var updatePhotoLabel = function updatePhotoLabel(e) {
+  e.preventDefault();
+  var photoLabel = document.getElementById('photo__label'); // the double blackslash below is an escape to the escape character
+
+  var filename = photo.value.split('\\')[photo.value.split('\\').length - 1];
+  photoLabel.textContent = "Choose new photo: ".concat(filename);
+};
+
 var updateInfoForm =
 /*#__PURE__*/
 function () {
   var _ref3 = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee3(e) {
-    var name, email;
+    var form;
     return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            e.preventDefault();
-            name = document.getElementById('name').value;
-            email = document.getElementById('email').value;
-            (0, _updateSettings.updateSettings)({
-              name: name,
-              email: email
-            }, 'Info');
+            e.preventDefault(); // Multimedia way
+            // MULTIPART FORM DATA
 
-          case 4:
+            form = new FormData();
+            form.append('name', document.getElementById('name').value);
+            form.append('email', document.getElementById('email').value);
+            form.append('photo', document.getElementById('photo').files[0]); // NORMAL WAY
+            // const name = document.getElementById('name').value;
+            // const email = document.getElementById('email').value;
+
+            (0, _updateSettings.updateSettings)(form, 'Info');
+
+          case 6:
           case "end":
             return _context3.stop();
         }
@@ -9098,12 +9170,19 @@ function () {
   return function updatePasswordForm(_x4) {
     return _ref4.apply(this, arguments);
   };
-}();
+}(); // const removePhotoDOM = async (e) => {
+//     e.preventDefault();
+//     await removePhoto();
+// }
+
 
 if (DOMRegistrationForm) DOMForm.addEventListener('submit', signupForm);
 if (DOMLoginForm) DOMForm.addEventListener('submit', loginForm);
 
 if (DOMUpdateInfoForm) {
+  DOMPhoto.addEventListener('change', updatePhotoLabel); // DOMPhotoRemove.onClick(removePhoto);
+
+  DOMPhotoRemove.addEventListener('click', _updateSettings.removePhoto);
   DOMUpdateInfoForm.addEventListener('submit', updateInfoForm);
   DOMUpdatePasswordForm.addEventListener('submit', updatePasswordForm);
 }
@@ -9146,7 +9225,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61266" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51446" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

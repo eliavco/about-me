@@ -2,7 +2,7 @@
 import '@babel/polyfill';
 import { displayMap } from './mapbox';
 import { signup, login, logout } from './login';
-import { updateSettings } from './updateSettings';
+import { updateSettings, removePhoto } from './updateSettings';
 
 // ELEMENTS
 const DOMMap = document.getElementById('map');
@@ -12,6 +12,8 @@ const DOMUpdateInfoForm = document.querySelector('.form-user-data');
 const DOMUpdatePasswordForm = document.querySelector('.form-user-password');
 const DOMForm = document.querySelector('.form');
 const DOMLogoutBtn = document.querySelector('.nav__el--logout');
+const DOMPhoto = document.getElementById('photo');
+const DOMPhotoRemove = document.getElementById('remove');
 
 const signupForm = async (e) => {
     e.preventDefault();
@@ -36,15 +38,29 @@ const loginForm = async (e) => {
     password.value = '';
 }
 
+const updatePhotoLabel = (e) => {
+    e.preventDefault();
+    const photoLabel = document.getElementById('photo__label');
+    // the double blackslash below is an escape to the escape character
+    const filename = photo.value.split('\\')[photo.value.split('\\').length - 1]; 
+    photoLabel.textContent = `Choose new photo: ${filename}`;
+}
+
 const updateInfoForm = async (e) => {
     e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
+
+    // Multimedia way
+    // MULTIPART FORM DATA
+    const form = new FormData();
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('photo', document.getElementById('photo').files[0]);
+
+    // NORMAL WAY
+    // const name = document.getElementById('name').value;
+    // const email = document.getElementById('email').value;
     updateSettings(
-        {
-            name, 
-            email
-        },
+        form,
         'Info'
     );
 }
@@ -72,11 +88,19 @@ const updatePasswordForm = async (e) => {
     newPasswordConfirm = '';
 }
 
+// const removePhotoDOM = async (e) => {
+//     e.preventDefault();
+//     await removePhoto();
+// }
+
 if (DOMRegistrationForm) DOMForm.addEventListener('submit', signupForm);
 if (DOMLoginForm) DOMForm.addEventListener('submit', loginForm);
 if (DOMUpdateInfoForm) {
-    DOMUpdateInfoForm.addEventListener('submit', updateInfoForm)
-    DOMUpdatePasswordForm.addEventListener('submit', updatePasswordForm)
+    DOMPhoto.addEventListener('change', updatePhotoLabel);
+    // DOMPhotoRemove.onClick(removePhoto);
+    DOMPhotoRemove.addEventListener('click', removePhoto);
+    DOMUpdateInfoForm.addEventListener('submit', updateInfoForm);
+    DOMUpdatePasswordForm.addEventListener('submit', updatePasswordForm);
 };
 
 if (DOMMap) {
