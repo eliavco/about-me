@@ -37,12 +37,12 @@ const upload = multer({
 });
 
 exports.uploadUserPhoto = upload.single('photo');
-exports.resizeUserPhoto = (req, res, next) => {
+exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
     if (!req.file) return next();
 
     req.file.filename = `user-${req.currentUser.id}-${Date.now()}.jpeg`;
 
-    sharp(req.file.buffer)
+    await sharp(req.file.buffer)
         .resize(500, 500)
         .toFormat('jpeg')
         // 90 percent image quality
@@ -50,7 +50,7 @@ exports.resizeUserPhoto = (req, res, next) => {
         .toFile(`public/img/users/${req.file.filename}`);
 
     next();
-};
+});
 
 const filterObj = (object, ...allowedFields) => {
     const newObj = {};

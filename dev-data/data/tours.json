@@ -473,5 +473,75 @@
         "day": 5
       }
     ]
+  },
+  {
+    "startLocation": {
+      "type": "Point",
+      "description": "Banff, CAN",
+      "coordinates": [
+        -115.570154,
+        51.178456
+      ],
+      "address": "224 Banff Ave, Banff, AB, Canada"
+    },
+    "ratingsAverage": 0,
+    "ratingsQuantity": 0,
+    "secretTour": false,
+    "images": [
+      "tour-10-1.jpeg",
+      "tour-10-2.jpeg",
+      "tour-10-3.jpeg"
+    ],
+    "startDates": [
+      "2021-04-25T09:00:00.000Z",
+      "2021-07-20T09:00:00.000Z",
+      "2021-10-05T09:00:00.000Z"
+    ],
+    "guides": [
+     "5c8a21d02f8fb814b56fa189",
+      "5c8a201e2f8fb814b56fa186",
+    "5c8a1f292f8fb814b56fa184"
+    ],
+    "_id": "5d8c5022222ba64b5035abb9",
+    "name": "The Mountain Biker",
+    "duration": 6,
+    "maxGroupSize": 7,
+    "imageCover": "tour-10-cover.jpeg",
+    "difficulty": "difficult",
+    "price": 597,
+    "summary": "Breathtaking bike trip through the Canadian Banff National Park",
+    "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "locations": [
+      {
+        "type": "Point",
+        "coordinates": [
+          -116.214531,
+          51.417611
+        ],
+        "_id": "5c88fa8cf4afda39709c2954",
+        "description": "Banff National Park",
+        "day": 1
+      },
+      {
+        "type": "Point",
+        "coordinates": [
+          -118.076152,
+          52.875223
+        ],
+        "_id": "5c88fa8cf4afda39709c2953",
+        "description": "Jasper National Park",
+        "day": 3
+      },
+      {
+        "type": "Point",
+        "coordinates": [
+          -117.490309,
+          51.261937
+        ],
+        "_id": "5c88fa8cf4afda39709c2952",
+        "description": "Glacier National Park of Canada",
+        "day": 5
+      }
+    ]
   }
 ]
