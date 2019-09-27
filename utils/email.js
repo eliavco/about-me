@@ -1,46 +1,56 @@
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport'); // this is important
+const pug = require('pug');
+const htmlToText = require('html-to-text');
+const emailHostConfig = require('./emailHostConfig');
 
-const serverC = process => {
-    return {
-        host:
-            process.env.EMAIL_TRAP === 'T'
-                ? process.env.EMAIL_HOST_DEV
-                : process.env.EMAIL_HOST_PROD,
-        port:
-            process.env.EMAIL_TRAP === 'T'
-                ? process.env.EMAIL_PORT_DEV * 1
-                : process.env.EMAIL_PORT_PROD * 1,
-        auth: {
-            user:
-                process.env.EMAIL_TRAP === 'T'
-                    ? process.env.EMAIL_USERNAME_DEV
-                    : process.env.EMAIL_USERNAME_PROD,
-            pass:
-                process.env.EMAIL_TRAP === 'T'
-                    ? process.env.EMAIL_PASSWORD_DEV
-                    : process.env.EMAIL_PASSWORD_PROD
-        }
-    };
+module.exports = class Email {
+    /*** Use this with the methods createTransporter or send for custom emails and sendWelcome for welcome emails* @param {object} user* @param {string} url*/
+
+    constructor(user, url) {
+        this.to = user.email;
+        this.firstName = user.name.split(' ')[0];
+        this.url = url;
+        this.from = `${process.env.EMAIL_FROM_FIRSTNAME} ${process.env.EMAIL_FROM_LASTNAME} <${process.env.EMAIL_FROM}>`;
+        this.serverSettings = emailHostConfig;
+        this.transporter = nodemailer.createTransport(
+            smtpTransport(this.serverSettings(process))
+        );
+    }
+
+    newTransporter() {
+        return this.transporter;
+    }
+
+    async send(template, subject) {
+        /*** @param {string} template* @param {string} subject*/
+
+        const html =
+            pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
+                firstName: this.firstName,
+                url: this.url,
+                subject
+            }) || '';
+
+        const mailOptions = {
+            from: this.from,
+            to: this.to,
+            subject,
+            html,
+            text: htmlToText.fromString(html)
+        };
+
+        await this.transporter.sendMail(mailOptions);
+    }
+
+    async sendWelcome() {
+        return await this.send('welcome', 'Welcome to the Natours Family!');
+    }
+
+    async sendPasswordReset() {
+        return await this.send(
+            'passwordReset',
+            'Your password reset token (valid for 10 minutes)'
+        );
+    }
 };
-
-const sendEmail = async options => {
-    // If EMAIL_TRAP set to T the emails will be trapped in mailtrap inbox
-    const serverConnect = serverC(process);
-
-    const transporter = nodemailer.createTransport(
-        smtpTransport(serverConnect)
-    );
-
-    const mailOptions = {
-        from: 'Eliav Cohen <eliav.co@eliavco.com>',
-        to: options.email,
-        subject: options.subject,
-        // html: options.html,
-        text: options.message
-    };
-
-    await transporter.sendMail(mailOptions);
-};
-
-module.exports = sendEmail;
