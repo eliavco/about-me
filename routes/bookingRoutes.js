@@ -12,5 +12,30 @@ router.get(
     protect,
     bookingController.getCheckoutSession
 );
+router
+    .route('/')
+    .get(
+        protect,
+        restrict('admin', 'lead-guide'),
+        bookingController.getAllBookings
+    )
+    .post(protect, restrict('admin'), bookingController.createBooking);
+
+router
+    .route('/:id')
+    .patch(
+        protect,
+        restrict('admin'),
+        bookingController.updateBookingF,
+        bookingController.updateBookingS
+    )
+    .delete(
+        protect,
+        restrict('admin', 'lead-guide'),
+        bookingController.deleteBookingF,
+        bookingController.deleteBookingS
+    );
+
+router.get('/stats', protect, restrict('admin'), bookingController.getStats);
 
 module.exports = router;

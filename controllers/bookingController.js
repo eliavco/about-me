@@ -1,7 +1,7 @@
 const stripe = require('stripe');
 const Tour = require('./../models/tourModel');
 const Booking = require('./../models/bookingModel');
-// const factory = require('./../controllers/factoryGenerator');
+const factory = require('./../controllers/factoryGenerator');
 // const AppError = require('./../utils/appError');
 const catchAsync = require('./../utils/catchAsync');
 
@@ -53,3 +53,27 @@ exports.createBookingCheckout = catchAsync(async (req, res, next) => {
     await Booking.create({ tour, user, price });
     res.redirect(req.originalUrl.split('?')[0]);
 });
+
+exports.getAllBookings = factory.getAll(Booking);
+
+exports.createBooking = factory.createOne(Booking);
+
+exports.updateBookingF = catchAsync(async (req, res, next) => {
+    req.upDoc = await Booking.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        // upsert: true,
+        runValidators: true
+    });
+    next();
+});
+
+exports.updateBookingS = factory.updateOne;
+
+exports.deleteBookingF = catchAsync(async (req, res, next) => {
+    req.delDoc = await Booking.findByIdAndDelete(req.params.id);
+    next();
+});
+
+exports.deleteBookingS = factory.deleteOne('booking');
+
+exports.getStats = factory.getStats(Booking);

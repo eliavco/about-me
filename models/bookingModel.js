@@ -44,6 +44,7 @@ bookingSchema.pre('save', async function(next) {
 
 bookingSchema.pre(/^find/, function(next) {
     this.populate('user').populate({ path: 'tour', select: 'name startDates' });
+    next();
 });
 
 bookingSchema.index({ tour: 1, user: 1, startDate: 1 }, { unique: true });

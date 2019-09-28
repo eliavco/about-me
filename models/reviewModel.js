@@ -30,7 +30,7 @@ const reviewSchema = new mongoose.Schema(
         content: {
             type: String,
             trim: true,
-            required: [true, 'A tour must have content']
+            required: [true, 'A review must have content']
         },
         images: [String],
         createdAt: {
