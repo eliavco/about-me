@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
+    "deploy": "git push heroku master",
     "start:dev": "concurrently \"npm:startServer:dev\" \"npm:watch:js\" ",
     "startServer:dev": "nodemon server.js",
     "start:prod": "cross-env NODE_ENV=\"production\" nodemon server.js",
