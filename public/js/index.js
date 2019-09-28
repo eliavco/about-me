@@ -3,6 +3,7 @@ import '@babel/polyfill';
 import { displayMap } from './mapbox';
 import { signup, login, logout } from './login';
 import { updateSettings, removePhoto } from './updateSettings';
+import { bookTour } from './stripe';
 
 // ELEMENTS
 const DOMMap = document.getElementById('map');
@@ -14,6 +15,7 @@ const DOMForm = document.querySelector('.form');
 const DOMLogoutBtn = document.querySelector('.nav__el--logout');
 const DOMPhoto = document.getElementById('photo');
 const DOMPhotoRemove = document.getElementById('remove');
+const DOMBookTourAction = document.getElementById('book-tour');
 
 const signupForm = async (e) => {
     e.preventDefault();
@@ -36,6 +38,13 @@ const loginForm = async (e) => {
     login(email.value, password.value);
     email.value = '';
     password.value = '';
+}
+
+const purchseTour = (e) => {
+    e.preventDefault();
+    e.target.textContent = 'Processing...';
+    // tour-id gets converted to tourId
+    bookTour(e.target.dataset.tourId);
 }
 
 const updatePhotoLabel = (e) => {
@@ -111,3 +120,5 @@ if (DOMMap) {
 }
 
 if (DOMLogoutBtn) DOMLogoutBtn.addEventListener('click', logout);
+
+if (DOMBookTourAction) DOMBookTourAction.addEventListener('click', purchseTour);

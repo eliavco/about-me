@@ -1,5 +1,4 @@
 const express = require('express');
-
 const path = require('path');
 const helmet = require('helmet');
 const sassMiddleware = require('node-sass-middleware');
@@ -15,6 +14,7 @@ const apiDocRouter = require('./routes/apiDocRoutes');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const bookingRouter = require('./routes/bookingRoutes');
 const viewRouter = require('./routes/viewRoutes');
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
@@ -106,15 +106,12 @@ app.use((req, res, next) => {
     next();
 });
 
-if (process.env.NODE_ENV === 'development') {
-    app.use(morgan());
-}
-
 // Routes Middleware
 const apiVersion = 1;
 app.use(`/api/v${apiVersion}/tours`, tourRouter);
 app.use(`/api/v${apiVersion}/users`, userRouter);
 app.use(`/api/v${apiVersion}/reviews`, reviewRouter);
+app.use(`/api/v${apiVersion}/bookings`, bookingRouter);
 app.use('/api', apiDocRouter);
 
 app.all(`/api/*`, (req, res, next) => {

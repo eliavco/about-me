@@ -1,6 +1,7 @@
 const express = require('express');
 const viewsController = require('./../controllers/viewsController');
 const authController = require('./../controllers/authController');
+const bookingController = require('./../controllers/bookingController');
 
 const router = express.Router();
 // eslint-disable-next-line no-unused-vars
@@ -8,7 +9,7 @@ const { protect, restrict, isLoggedIn } = authController;
 
 // router.use(authController.isLoggedIn);
 
-router.get('/', isLoggedIn, viewsController.getOverview);
+router.get('/', bookingController.createBookingCheckout, isLoggedIn, viewsController.getOverview);
 
 router.get('/overview', isLoggedIn, viewsController.getOverview);
 

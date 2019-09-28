@@ -32,3 +32,6 @@ What To Do that Jonas missed:
     - maps and style for maps offline
         done - add one day to the display duration on profile pages for tours
     - implement website for password reset
+    - add stripe subscriptions for getting three free tours every year for example
+    - add analytics and statistics
+    - manage tours, see bookings, review and manage users, get refunded for cancellations
