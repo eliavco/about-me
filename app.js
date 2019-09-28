@@ -80,7 +80,7 @@ app.use('/api', limiter);
 
 // HAS to be before JSON parsing
 app.post(
-    'webhook-checkout',
+    '/webhook-checkout',
     express.raw({ type: 'application/json' }),
     bookingController.webhookCheckout
 );
