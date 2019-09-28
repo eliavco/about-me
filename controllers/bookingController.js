@@ -31,7 +31,9 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
                     // `${req.protocol}://${req.get('host')}/img/tours/${
                     //     tour.imageCover
                     // }`
-                    `https://natours-eliav.herokuapp.com/img/tours/${tour.imageCover}`
+                    `${req.protocol}://${req.get('host')}/img/tours/${
+                        tour.imageCover
+                    }`
                 ],
                 amount: tour.price * 100,
                 currency: 'usd',
@@ -59,7 +61,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 const createBookingCheckout = catchAsync(async session => {
     const tour = session.client_reference_id;
     const user = (await User.findOne({ email: session.customer_email })).id;
-    const price = session.lineItems[0].amount / 100;
+    const price = session.display_items[0].amount / 100;
 
     await Booking.create({ tour, user, price });
 });
@@ -77,7 +79,7 @@ exports.webhookCheckout = (req, res, next) => {
         return res.status(400).send(`Webhook error: ${err.message}`);
     }
 
-    if (event.type === 'checkout.session.complete')
+    if (event.type === 'checkout.session.completed')
         createBookingCheckout(event.data.object);
 
     res.status(200).json({ received: true });
