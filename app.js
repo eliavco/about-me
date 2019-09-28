@@ -9,6 +9,7 @@ const hpp = require('hpp');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const apiDocRouter = require('./routes/apiDocRoutes');
 // const rewriteDocs = require('./dev-data/data/import-dev-data-docs');
@@ -22,6 +23,18 @@ const AppError = require('./utils/appError');
 
 const app = express();
 app.enable('trust proxy');
+app.use(cors());
+// Access-Control-Allow-Origin *
+// api.natours.com frontend natours.com
+// app.use(
+//     cors({
+//         origin: 'https://www.natours.com'
+//     })
+// );
+
+// OPTIONS IS AN HTTP METHOD
+app.options('*', cors());
+// app.options('/api/v1/tours', cors());
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
@@ -112,7 +125,11 @@ app.use((req, res, next) => {
 
 // Routes Middleware
 const apiVersion = 1;
-app.use(`/api/v${apiVersion}/tours`, tourRouter);
+app.use(
+    `/api/v${apiVersion}/tours`,
+    // cors(),
+    tourRouter
+);
 app.use(`/api/v${apiVersion}/users`, userRouter);
 app.use(`/api/v${apiVersion}/reviews`, reviewRouter);
 app.use(`/api/v${apiVersion}/bookings`, bookingRouter);
