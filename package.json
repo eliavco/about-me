@@ -4,6 +4,7 @@
   "description": "Learning Node.js, Express, and MongoDB",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "start:dev": "concurrently \"npm:startServer:dev\" \"npm:watch:js\" ",
     "startServer:dev": "nodemon server.js",
     "start:prod": "cross-env NODE_ENV=\"production\" nodemon server.js",
