@@ -8,6 +8,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 const apiDocRouter = require('./routes/apiDocRoutes');
 // const rewriteDocs = require('./dev-data/data/import-dev-data-docs');
@@ -95,6 +96,8 @@ app.use(
         ]
     })
 );
+
+app.use(compression());
 
 // custom middleware
 app.use((req, res, next) => {
