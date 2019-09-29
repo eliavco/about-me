@@ -8,6 +8,7 @@ const router = express.Router();
 const { protect, restrict, isLoggedIn } = authController;
 
 // router.use(authController.isLoggedIn);
+router.use(viewsController.alerts);
 
 router.get(
     '/',

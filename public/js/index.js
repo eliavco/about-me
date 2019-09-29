@@ -4,6 +4,7 @@ import { displayMap } from './mapbox';
 import { signup, login, logout } from './login';
 import { updateSettings, removePhoto } from './updateSettings';
 import { bookTour } from './stripe';
+import { showAlert } from './alerts';
 
 // ELEMENTS
 const DOMMap = document.getElementById('map');
@@ -16,6 +17,7 @@ const DOMLogoutBtn = document.querySelector('.nav__el--logout');
 const DOMPhoto = document.getElementById('photo');
 const DOMPhotoRemove = document.getElementById('remove');
 const DOMBookTourAction = document.getElementById('book-tour');
+const DOMAlert = document.querySelector('body').dataset.alert;
 
 const signupForm = async (e) => {
     e.preventDefault();
@@ -122,3 +124,5 @@ if (DOMMap) {
 if (DOMLogoutBtn) DOMLogoutBtn.addEventListener('click', logout);
 
 if (DOMBookTourAction) DOMBookTourAction.addEventListener('click', purchseTour);
+
+if (DOMAlert) showAlert('success', DOMAlert, 20);
