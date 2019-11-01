@@ -44,7 +44,7 @@ router.route('/stats').get(protect, tourController.getStats);
 // ID HAS TO BE THE LAST
 router
     .route('/:id')
-    .get(protect, tourController.getTour)
+    .get(tourController.getTour)
     .patch(
         protect,
         restrict('admin', 'lead-guide'),
