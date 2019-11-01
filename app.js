@@ -10,7 +10,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
 const cors = require('cors');
-const rateLimit = require('express-rate-limit');
+// const rateLimit = require('express-rate-limit');
 const apiDocRouter = require('./routes/apiDocRoutes');
 // const rewriteDocs = require('./dev-data/data/import-dev-data-docs');
 const tourRouter = require('./routes/tourRoutes');
@@ -63,7 +63,7 @@ if (process.env.NODE_ENV !== 'production') app.use(morgan('dev'));
 
 // rewriteDocs.rewriteData();
 
-const limiter = rateLimit({
+/*const limiter = rateLimit({
     max: 100,
     windowMs: 60 * 60 * 1000,
     message: {
@@ -73,10 +73,10 @@ const limiter = rateLimit({
     handler: function(req, res /*, next*/) {
         res.status(this.statusCode).json(this.message);
     }
-});
+});*/
 
 // Limit requests from IP
-app.use('/api', limiter);
+// app.use('/api', limiter);
 
 // HAS to be before JSON parsing
 app.post(
