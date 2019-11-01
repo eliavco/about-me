@@ -70,7 +70,7 @@ if (process.env.NODE_ENV !== 'production') app.use(morgan('dev'));
         status: 'error',
         message: 'Too many requests, please try again later'
     },
-    handler: function(req, res /*, next*/) {
+    handler: function(req, res , next) {
         res.status(this.statusCode).json(this.message);
     }
 });*/
