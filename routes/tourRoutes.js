@@ -17,10 +17,8 @@ const { protect, restrict } = authController;
 
 // router.use('/:tourId', reviewRouter);
 
-router.route('/').get((req,res,next)=>{res.status(200).end('hello')});
-
 router
-    .route('/go')
+    .route('/')
     .get(tourController.getAllTours)
     .post(
         /*tourController.checkBody,*/ protect,

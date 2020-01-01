@@ -10,8 +10,10 @@ const { protect, restrict, isLoggedIn } = authController;
 // router.use(authController.isLoggedIn);
 router.use(viewsController.alerts);
 
+router.get('/', viewsController.getReal);
+
 router.get(
-    '/',
+    '/go',
     // bookingController.createBookingCheckout,
     isLoggedIn,
     viewsController.getOverview
