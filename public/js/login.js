@@ -18,7 +18,7 @@ export const login = async (email, password) => {
         if (res.data.status === 'success') {
             showAlert('success', 'Logged in successfully!');
             setTimeout(() => {
-                location.assign('/');
+                location.assign('/go');
             }, 1500);
         }
 
@@ -49,7 +49,7 @@ export const signup = async (name, email, password, passwordConfirm) => {
         if (res.data.status === 'success') {
             showAlert('success', 'Signed up successfully!');
             setTimeout(() => {
-                location.assign('/');
+                location.assign('/go');
             }, 1500);
         }
 
@@ -73,7 +73,7 @@ export const logout = async () => {
         // IF reload not set with true the browser might reload the page from the cache and not GET the current page again from the server
         if (res.data.status === 'success') {
             if (window.location.pathname in defaultRoutes) return location.reload(true);
-            return location.assign('/');
+            return location.assign('/go');
         }
     } catch (err) {
         showAlert('error', 'Error while logging out! Please try again later.')
