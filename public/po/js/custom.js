@@ -81,7 +81,7 @@
             })
         }
     }
-    galleryMasonry();
+    // galleryMasonry();
 	
 	/*----------------------------------------------------*/
     /*  Simple LightBox js
