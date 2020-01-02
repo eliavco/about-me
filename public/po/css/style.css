@@ -2501,6 +2501,7 @@ h6 {
 .welcome_text p {
   max-width: 495px;
   font-family: "Roboto", sans-serif;
+  text-align: justify;
   margin-bottom: 40px; }
 
 .wel_item {
