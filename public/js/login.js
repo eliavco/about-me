@@ -18,7 +18,6 @@ export const login = async (email, password) => {
         if (res.data.status === 'success') {
             showAlert('success', 'Logged in successfully!');
             setTimeout(() => {
-				console.log('work');
                 location.assign('/go');
             }, 1500);
         }
