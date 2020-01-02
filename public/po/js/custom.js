@@ -81,12 +81,12 @@
             })
         }
     }
-    // galleryMasonry();
+    galleryMasonry();
 	
 	/*----------------------------------------------------*/
     /*  Simple LightBox js
     /*----------------------------------------------------*/
-    $('.imageGallery1 .light').simpleLightbox();
+    // $('.imageGallery1 .light').simpleLightbox();
     
     /*----------------------------------------------------*/
     /*  Google map js
