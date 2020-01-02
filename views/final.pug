@@ -26,7 +26,7 @@ html(lang="en")
 				nav.navbar.navbar-expand-lg.navbar-light
 					.container.box_1620
 						// Brand and toggle get grouped for better mobile display
-						a.navbar-brand.logo_h(href="/")
+						a.navbar-brand.logo_h(href="#")
 							img(src="/po/img/logo.png" alt="")
 						button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
 							span.icon-bar
@@ -36,7 +36,7 @@ html(lang="en")
 						#navbarSupportedContent.collapse.navbar-collapse.offset
 							ul.nav.navbar-nav.menu_nav.ml-auto
 								li.nav-item.active
-									a.nav-link(href="/") Eliav Cohen
+									a.nav-link(href="#") Eliav Cohen
 								//
 									<li class="nav-item"><a class="nav-link" href="about-us.html">About</a></li>
 									<li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
@@ -298,17 +298,17 @@ html(lang="en")
 					ul.gallery_filter.list
 						li.active(data-filter="*")
 							a(href="#") All
-						li(data-filter=".brand")
+						li(data-filter=".fe")
 							a(href="#") Front end
-						li(data-filter=".manipul")
+						li(data-filter=".api")
 							a(href="#") API
-						li(data-filter=".creative")
+						li(data-filter=".fs")
 							a(href="#") Full stack
-						li(data-filter=".design")
+						li(data-filter=".rn")
 							a(href="#") React Native
 			.container
 				.gallery_f_inner.row.imageGallery1
-					.col-lg-4.col-md-4.col-sm-6.brand.manipul.design.print
+					.col-lg-4.col-md-4.col-sm-6.fe.print
 						.h_gallery_item
 							.g_img_item
 								img.img-fluid(src="/po/img/gallery/omnifood.jpg" alt="Omnifood")
@@ -317,7 +317,7 @@ html(lang="en")
 							.g_item_text
 								h4 Omnifood
 								p Demo restaurant -responsive
-					.col-lg-4.col-md-4.col-sm-6.brand.manipul.creative
+					.col-lg-4.col-md-4.col-sm-6.fe
 						.h_gallery_item
 							.g_img_item
 								img.img-fluid(src="/po/img/gallery/budgety.jpg" alt="Budgety")
@@ -326,7 +326,7 @@ html(lang="en")
 							.g_item_text
 								h4 Budgety
 								p Demo savings app -unresponsive
-					.col-lg-4.col-md-4.col-sm-6.manipul.creative.design.print
+					.col-lg-4.col-md-4.col-sm-6.fe.print
 						.h_gallery_item
 							.g_img_item
 								img.img-fluid(src="/po/img/gallery/pig.jpg" alt="Pig")
@@ -335,7 +335,7 @@ html(lang="en")
 							.g_item_text
 								h4 Pig Game
 								p A simple online luck game -unresponsive
-					.col-lg-4.col-md-4.col-sm-6.brand.creative.print
+					.col-lg-4.col-md-4.col-sm-6.fe.print
 						.h_gallery_item
 							.g_img_item
 								img.img-fluid(src="/po/img/gallery/natours-f.jpg" alt="Natours")
@@ -344,7 +344,7 @@ html(lang="en")
 							.g_item_text
 								h4 Natours - frontend
 								p Demo tours company -responsive
-					.col-lg-4.col-md-4.col-sm-6.brand.manipul.design
+					.col-lg-4.col-md-4.col-sm-6.fe.api
 						.h_gallery_item
 							.g_img_item
 								img.img-fluid(src="/po/img/gallery/forkify.jpg" alt="Forkify")
@@ -353,7 +353,7 @@ html(lang="en")
 							.g_item_text
 								h4 Forkify
 								p Recipes website -unresponsive
-					.col-lg-4.col-md-4.col-sm-6.brand.creative
+					.col-lg-4.col-md-4.col-sm-6.fe
 						.h_gallery_item
 							.g_img_item
 								img.img-fluid(src="/po/img/gallery/trello.jpg" alt="Trello")
@@ -362,7 +362,7 @@ html(lang="en")
 							.g_item_text
 								h4 Trello
 								p Demo hotel booking app -responsive
-					.col-lg-4.col-md-4.col-sm-6.brand.creative
+					.col-lg-4.col-md-4.col-sm-6.fe
 						.h_gallery_item
 							.g_img_item
 								img.img-fluid(src="/po/img/gallery/nexter.jpg" alt="Nexter")
@@ -371,7 +371,7 @@ html(lang="en")
 							.g_item_text
 								h4 Nexter
 								p Demo realtor app -responsive
-					.col-lg-4.col-md-4.col-sm-6.brand.creative
+					.col-lg-4.col-md-4.col-sm-6.fe.api.fs
 						.h_gallery_item
 							.g_img_item
 								img.img-fluid(src="/po/img/gallery/natours-b.jpg" alt="Natours")
@@ -380,7 +380,7 @@ html(lang="en")
 							.g_item_text
 								h4 Natours - backend
 								p Demo tours company -unresponsive
-					.col-lg-4.col-md-4.col-sm-6.brand.creative
+					.col-lg-4.col-md-4.col-sm-6.api.fe.rn
 						.h_gallery_item
 							.g_img_item
 								img.img-fluid(src="/po/img/gallery/natours-m.png" alt="Natours")
