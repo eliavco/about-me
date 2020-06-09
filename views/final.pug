@@ -91,6 +91,10 @@ html(lang="en")
 											a(href="https://www.google.com/maps/@32.7349979,34.9082651,11z" traget="_blank")
 												i.lnr.lnr-home
 												|  Haifa region, Israel
+										li
+											a(href="https://github.com/eliavco" traget="_blank")
+												i.lnr.lnr-graduation-hat
+												|  GitHub Account
 									ul.list.personal_social.personal_social_up
 										li
 											a(href="https://en.wikipedia.org/wiki/HTML")
@@ -211,7 +215,7 @@ html(lang="en")
 										.d-flex
 											p March 2018 to present       
 										.media-body
-											h4 Courses Online
+											h4 Online Courses
 											p
 												| Node.js: 
 												br
@@ -232,6 +236,14 @@ html(lang="en")
 										.media-body
 											h4 BrainBee
 											p Preparing for an international competition in neuroscience
+								li
+									span
+									.media
+										.d-flex
+											p April 2020 to present
+										.media-body
+											h4 Angular
+											p Mastering the arts of the front-end framework
 						#profile.tab-pane.fade(role="tabpanel" aria-labelledby="profile-tab")
 							ul.list
 								li
@@ -270,24 +282,24 @@ html(lang="en")
 					.col-lg-4.col-md-6
 						.feature_item
 							i.flaticon-city
-							h4 Full Stack Website
+							h4 Web Apps
 							p
-								| I can make you a website, ranging from a simple one to display some data to a very complex one that requires a databse, if you want accounts or payments for example.
+								| Everything ranging from a simple website to display some data to a very complex website that requires databses and a lots of logic, or even just a RESTful API if you need one.
 					.col-lg-4.col-md-6
 						.feature_item
 							i.flaticon-skyline
 							h4 Mobile App
 							p
-								| I can build you apps for both iOS and Android, they can also be synced with the website. check this simple 
+								| Any mobile app for both iOS and Android, they can also be synced with the website if you need to. check this simple 
 								a(href="https://play.google.com/store/apps/details?id=com.eliavco.natoursmob" target="_blank") example
-								|  for android. You can see the link to the web version of this project below.
+								|  for android. You can check out the link to the web version of this project below.
 					.col-lg-4.col-md-6
 						.feature_item
 							i.flaticon-sketch
-							h4 RESTful 
+							h4 Desktop Apps 
 								a(href="https://en.wikipedia.org/wiki/Application_programming_interface" target="_blank") API
 							p
-								| I can create a nice API for you (an interface for your databse to interact with other devices using the internet) to manage your data. A RESTful API can also be part of your website.
+								| Installable apps to all 3 platforms: Windows, Linux, and Mac. The apps can include all types of functionality you need
 		// ================End Feature Area =================
 		// ================Home Gallery Area =================
 		section.home_gallery_area.p_120
@@ -300,13 +312,17 @@ html(lang="en")
 						li.active(data-filter="*")
 							a(href="#") All
 						li(data-filter=".fe")
-							a(href="#") Front end
+							a(href="#") Front end (Vanilla - no framework)
 						li(data-filter=".api")
 							a(href="#") API
 						li(data-filter=".fs")
 							a(href="#") Full stack
 						li(data-filter=".rn")
 							a(href="#") React Native
+						li(data-filter=".ng")
+							a(href="#") Angular
+						li(data-filter=".el")
+							a(href="#") Desktop
 			.container
 				.gallery_f_inner.row.imageGallery1
 					.col-lg-4.col-md-4.col-sm-6.fe.print
@@ -390,6 +406,15 @@ html(lang="en")
 							.g_item_text
 								h4 Natours - mobile
 								p Demo tours company
+					.col-lg-4.col-md-4.col-sm-6.api.fe.ng
+						.h_gallery_item
+							.g_img_item
+								img.img-fluid(src="/po/img/gallery/bookbike.png" alt="Natours")
+								a.light(href="https://bookthebike.web.app" target="_blank")
+									img(src="/po/img/gallery/icon.png" alt="Natours")
+							.g_item_text
+								h4 Bookbike
+								p Demo bike renting company
 				.more_btn
 					a.main_btn(href="mailto:contact@eliavco.com" target="_blank") Order the next project
 		// ================End Home Gallery Area =================

@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const helmet = require('helmet');
-const sassMiddleware = require('node-sass-middleware');
+// const sassMiddleware = require('node-sass-middleware');
 // const sass = require('node-sass');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
@@ -45,16 +45,16 @@ app.set('views', path.join(__dirname, 'views'));
 //         src: './public/css/sass/style.scss',
 //         dest: './public/css/style.css',
 
-app.use(
-    sassMiddleware({
-        src: __dirname,
-        dest: path.join(__dirname, 'public'),
-        debug: process.env.NODE_ENV !== 'production',
-        indentedSyntax: false,
-        outputStyle: 'compressed',
-        sourceMap: true
-    })
-);
+// app.use(
+//     sassMiddleware({
+//         src: __dirname,
+//         dest: path.join(__dirname, 'public'),
+//         debug: process.env.NODE_ENV !== 'production',
+//         indentedSyntax: false,
+//         outputStyle: 'compressed',
+//         sourceMap: true
+//     })
+// );
 
 app.use(express.static(path.join(__dirname, 'public')));
 
