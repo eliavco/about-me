@@ -14,6 +14,11 @@ exports.alerts = (req, res, next) => {
 };
 
 exports.getReal = catchAsync(async (req, res, next) => {
+    res.status(301).redirect('https://eliavco.com');
+    // res.status(200).render('final');
+});
+exports.redReal = catchAsync(async (req, res, next) => {
+    // res.status(301).redirect('https://eliavco.com');
     res.status(200).render('final');
 });
 

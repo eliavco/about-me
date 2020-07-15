@@ -10,7 +10,8 @@ const { protect, restrict, isLoggedIn } = authController;
 // router.use(authController.isLoggedIn);
 router.use(viewsController.alerts);
 
-router.get('/', viewsController.getReal);
+router.get('/', viewsController.redReal);
+router.get('/justme/eliavco', viewsController.getReal);
 
 router.get(
     '/go',
